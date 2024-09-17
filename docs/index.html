@@ -1,81 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LABRACADABRA</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <canvas id="canvas"></canvas>
-    <div class="container">
-        <h1>LABRACADABRA</h1>
-        <p class="subtitle">The untold history of the future</p>
-        <div class="info">
-            <p>Festival at MIT Media Lab</p>
-            <p>October 15–18, 2024</p>
-            <p>Hackathon / Panels (Interactive Time Capsules) / Workshops: October 15–17</p>
-            <p>Party (Labaret) Exhibition and Performances: October 18, 2024 6pm – 1am</p>
-            <p>Music mischief</p>
-        </div>
-        <div style="text-align: center;">
-            <a href="https://www.eventbrite.com/e/labracadabra-tickets-123456789" class="btn" target="_blank">RSVP to Hackathon</a>
-            <a href="https://www.eventbrite.com/e/labracadabra-party-tickets-987654321" class="btn" target="_blank">RSVP to Party</a>
-            <a href="#" class="btn" onclick="alert('Thank you for your interest in contributing! Please contact us at contribute@labracadabra.mit.edu for more information on travel/stay reimbursements.')">Contribute</a>
-        </div>
-        <div id="countdown"></div>
-    </div>
+  <head>
+    <script src="p5.js"></script>
+    <script src="p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
 
-    <script>
-        // Three.js background
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas') });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+      body {
+        /* background: black; */
+      }
+      img {
+        display: block;
+        position: absolute;
+        width: 1920px;
+        height: auto;
+        top: 0;
+        left: 0;
+        mix-blend-mode: overlay;
+        opacity: 0.5;
+      }
 
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-
-        camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Countdown timer
-        const countdownDate = new Date("Oct 15, 2024 00:00:00").getTime();
-        const countdownElement = document.getElementById("countdown");
-
-        const countdownTimer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-            if (distance < 0) {
-                clearInterval(countdownTimer);
-                countdownElement.innerHTML = "LABRACADABRA HAS BEGUN!";
-            }
-        }, 1000);
-
-        // Resize handler
-        window.addEventListener('resize', function() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
-</body>
+      canvas {
+        /* filter: blur(1px); */
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+    </main>
+    <script src="sketch.js"></script>
+    <img src="4k-noise.jpg" alt="">
+  </body>
 </html>
