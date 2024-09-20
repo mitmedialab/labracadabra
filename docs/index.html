@@ -9,31 +9,239 @@
       * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        /* background: black; */
-      }
-      img {
-        display: block;
-        position: absolute;
-        width: 1920px;
-        height: auto;
-        top: 0;
-        left: 0;
-        mix-blend-mode: overlay;
-        opacity: 0.5;
+        background: url('4k-noise.jpg') repeat;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        color: #fff;
       }
 
-      canvas {
-        /* filter: blur(1px); */
+      .wide-video-container {
+        width: 100%;
+      }
+
+      video.top-video {
+        width: 100%;
+      }
+
+      main {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      h1, h2 {
+        margin-bottom: 1rem;
+      }
+
+      p, ul {
+        margin-bottom: 1rem;
+      }
+
+      .signup-link {
+        display: inline-block;
+        background-color: #ff4081;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 1rem;
+      }
+
+      /* .project-carousel {
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 20px 0;
+      }
+
+      .project-card {
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px;
+        vertical-align: top;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+      }
+
+      .project-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .project-card h3 {
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+
+      .project-card p {
+        font-size: 0.9em;
+        white-space: normal;
+      }
+
+      .project-card a {
+        color: #ff4081;
+        text-decoration: none;
+      } */
+
+      .image-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        min-width: 100vw;
+      }
+
+      .image-item {
+        flex: 0 0 auto;
+        margin: 2px;
+        transition: all 0.3s ease;
+        z-index: 1;
+        width: 200px;
+        height: 200px;
+      }
+
+      .image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-item:hover {
+        z-index: 100;
+        transform: scale(2);
+      }
+
+      .image-item:hover img {
+        height: auto;
+        object-fit: contain;
       }
     </style>
   </head>
   <body>
+    <div class="wide-video-container">
+      <video class="top-video" src="assets/vera.webm" autoplay muted loop></video>
+    </div>
     <main>
+      <h1>LABRACADABRA</h1>
+      <h2>The Untold Histories of the Future</h2>
+      <p>Hack/Festival at MIT Media Lab</p>
+
+      <h2>October 15–18, 2024</h2>
+
+      <h3>October 15–17</h3>
+      <ul>
+        <li>Hackathon: E14-643</li>
+        <li>Time Capsules / Workshops with Alumni</li>
+        <li>Exhibition of previous projects</li>
+      </ul>
+
+      <h3>October 18, 2024 6pm – 1am</h3>
+      <ul>
+        <li>Party (Labaret: perform or perish): E14-300</li>
+        <li>Exhibition and Performances</li>
+      </ul>
+
+
+      <h2>WHAT IS LABRACADBARA?</h2>
+      <p>Labracadabra: The Untold Histories of the Future is a new kind of event in the MIT Media Lab, where students, faculty and alumni will dive into four decades of impactful, playful, and quirky past to reimagine the future.</p>
+
+      <p>Labracadabra is:</p>
+      <ul>
+        <li>a HACKATHON where current students reimagine / recreate / revisit past Media Lab projects using new technologies and fresh perspectives.</li>
+        <li>hands-on WORKSHOPS by distinguished alumni from various eras of the lab discussing pioneering projects or interesting topics that were ahead of their time and/or out of the ordinary</li>
+        <li>an EXHIBITION showcasing historic Media Lab work as well as shining light on the untold stories that make up the lab.</li>
+        <li>the legendary 99F PARTY to cap off the week</li>
+      </ul>
+
+      <h2>WHYYYYY?</h2>
+      <p>Bring back the MAGIC of the lab by HACKing TOGETHER across TIME</p>
+
+      <h2>More Information</h2>
+      <ul>
+        <li>RSVP: to the Hackathon and/or Party</li>
+        <li>Contribute: (travel/stay reimbursements)</li>
+        <li>Visit: tips for hotels etc</li>
+      </ul>
+
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrimrYRo63dSFQALbGU1E_iABYiCjCM1PR3Z3k2DqfmO1Gmw/viewform?usp=sharing" class="signup-link">Sign up here</a>
+
+
+      <!-- <h2>Featured Projects</h2>
+      <div class="project-carousel">
+        <div class="project-card">
+          <img src="assets/toilet.jpg" alt="You're In Control">
+          <h3>You're In Control: A Urinary User Interface</h3>
+          <p>The You're In Control system uses computation to enhance the act of urination. Sensors in the back of a urinal detect the position of impact of a stream of urine, enabling the user to play interactive games on a screen mounted above the urinal.</p>
+          <a href="https://web.archive.org/web/20101202110104id_/http://web.media.mit.edu/~hayes/mas863/urinecontrol/yic_chi2003_posted.pdf" target="_blank">Learn More</a>
+        </div>
+
+        <div class="project-card">
+          <img src="assets/Clocky.jpg" alt="Clocky">
+          <h3>Clocky</h3>
+          <p>Clocky--a shag-carpeting-covered digital clock on two wheels--jumps from the bedside table to find a hiding spot each time the snooze bar is pressed. A few minutes later, when the alarm sounds for a second time, the sleeper must first find the clock before he or she can press snooze again.</p>
+          <a href="https://www.dexigner.com/news/4332" target="_blank">Learn More</a>
+        </div>
+      </div> -->
     </main>
-    <script src="sketch.js"></script>
-    <img src="4k-noise.jpg" alt="">
+
+
+    <div class="image-grid">
+      <!-- Images will be dynamically added here -->
+    </div>
+      
+ 
+
+    <script>
+       const imageGrid = document.querySelector('.image-grid');
+
+        // Function to get all image files from the directory
+        async function getImageFiles() {
+          try {
+            const response = await fetch('assets/photodump/');
+            const text = await response.text();
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(text, 'text/html');
+            const links = htmlDoc.getElementsByTagName('a');
+            return Array.from(links)
+              .map(link => link.href)
+              .filter(href => href.match(/\.(jpe?g|png|gif)$/i));
+          } catch (error) {
+            console.error('Error fetching image files:', error);
+            return [];
+          }
+        }
+
+        // Function to create and add image elements
+        function addImageToGrid(imageSrc) {
+          const img = document.createElement('img');
+          img.src = imageSrc;
+          img.alt = `Image`;
+          img.onerror = () => img.style.display = 'none'; // Hide image if it fails to load
+
+          const div = document.createElement('div');
+          div.className = 'image-item';
+          // div.style.width = `${Math.floor(Math.random() * (200 - 50 + 1)) + 50}px`; // Random width between 50px and 200px
+          // div.style.height = `${Math.floor(Math.random() * (200 - 50 + 1)) + 50}px`; // Random height between 50px and 200px
+
+          div.appendChild(img);
+          imageGrid.appendChild(div);
+        }
+
+        // Main function to load and display images
+        async function loadImages() {
+          const imageFiles = await getImageFiles();
+          imageFiles.forEach(addImageToGrid);
+        }
+
+        // Call the main function
+        loadImages();
+    </script>
   </body>
 </html>
