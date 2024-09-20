@@ -369,19 +369,19 @@
       // Image grid code (same as before)
       const imageGrid = document.querySelector('.image-grid');
 
-      // Function to get all image files from the directory
       async function getImageFiles() {
+        const apiUrl = 'https://api.github.com/repos/mitmedialab/labracadabra/contents/docs/assets/photodump';
+        const rawContentUrl = 'https://raw.githubusercontent.com/mitmedialab/labracadabra/main/docs/assets/photodump/';
+
         try {
-          const response = await fetch('assets/photodump/');
-          const text = await response.text();
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(text, 'text/html');
-          const links = htmlDoc.getElementsByTagName('a');
-          return Array.from(links)
-            .map(link => link.href)
-            .filter(href => href.match(/\.(jpe?g|png|gif)$/i))
+          const response = await fetch(apiUrl);
+          if (!response.ok) throw new Error('Failed to fetch directory contents');
+          const data = await response.json();
+          
+          return data
+            .filter(file => file.type === 'file' && file.name.match(/\.(jpe?g|png|gif)$/i))
+            .map(file => rawContentUrl + file.name)
             .sort(() => Math.random() - 0.5);
-          return imageFiles;
         } catch (error) {
           console.error('Error fetching image files:', error);
           return [];
