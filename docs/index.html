@@ -379,7 +379,9 @@
           const links = htmlDoc.getElementsByTagName('a');
           return Array.from(links)
             .map(link => link.href)
-            .filter(href => href.match(/\.(jpe?g|png|gif)$/i));
+            .filter(href => href.match(/\.(jpe?g|png|gif)$/i))
+            .sort(() => Math.random() - 0.5);
+          return imageFiles;
         } catch (error) {
           console.error('Error fetching image files:', error);
           return [];
