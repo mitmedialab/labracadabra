@@ -4,8 +4,13 @@
     <script src="p5.js"></script>
     <script src="p5.sound.min.js"></script>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-      /* Reset and base styles */
+      @font-face {
+        font-family: 'terminal-grotesque_open';
+        src: url('assets/terminal-grotesque_open.otf') format('opentype');
+      } 
+
       * {
         margin: 0;
         padding: 0;
@@ -13,161 +18,27 @@
       }
 
       body {
-        background: url('assets/4k-noise.jpg') repeat;
-        min-height: 100vh;
-        font-family: 'Courier New', Courier, monospace;
-        color: #fff;
+        background-color: rgb(220,220,220);
+        font-family: 'terminal-grotesque_open', sans-serif;
+        font-weight: 400;
         overflow-x: hidden;
+        min-height: 100vh;
       }
 
-      /* Neon glow effect */
-      .neon {
-        color: #fff;
-        text-shadow:
-          0 0 5px #fff,
-          0 0 10px #fff,
-          0 0 20px #ff00de,
-          0 0 30px #ff00de,
-          0 0 40px #ff00de,
-          0 0 50px #ff00de,
-          0 0 60px #ff00de,
-          0 0 70px #ff00de;
-      }
-
-      /* Glitch effect */
-      .glitch {
-        position: relative;
-        font-size: 3em;
-        font-weight: bold;
-        animation: glitch 1s infinite;
-      }
-
-      .glitch::before,
-      .glitch::after {
-        content: attr(data-text);
-        position: absolute;
-        left: 0;
-      }
-
-      .glitch::before {
-        animation: glitchTop 1s infinite;
-        clip: rect(0, 900px, 0, 0);
-      }
-
-      .glitch::after {
-        animation: glitchBottom 1s infinite;
-        clip: rect(0, 900px, 0, 0);
-      }
-
-      @keyframes glitch {
-        0% {
-          transform: none;
-        }
-        20% {
-          transform: skew(0.5deg);
-        }
-        40% {
-          transform: skew(-0.5deg);
-        }
-        60% {
-          transform: skew(0.5deg);
-        }
-        80% {
-          transform: skew(-0.5deg);
-        }
-        100% {
-          transform: none;
-        }
-      }
-
-      @keyframes glitchTop {
-        0% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(-2px, -2px);
-        }
-        20% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(2px, 2px);
-        }
-        40% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(-2px, -2px);
-        }
-        60% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(2px, 2px);
-        }
-        80% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(-2px, -2px);
-        }
-        100% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(0, 0);
-        }
-      }
-
-      @keyframes glitchBottom {
-        0% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(2px, 2px);
-        }
-        20% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(-2px, -2px);
-        }
-        40% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(2px, 2px);
-        }
-        60% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(-2px, -2px);
-        }
-        80% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(2px, 2px);
-        }
-        100% {
-          clip: rect(0, 900px, 0, 0);
-          transform: translate(0, 0);
-        }
-      }
-
-      /* Typewriter effect */
-      .typewriter h2 {
-        overflow: hidden;
-        border-right: .15em solid #ff00de;
-        white-space: nowrap;
-        margin: 0 auto;
-        letter-spacing: .15em;
-        animation:
-          typing 3.5s steps(40, end),
-          blink-caret .75s step-end infinite;
-      }
-
-      @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-      }
-
-      @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: #ff00de; }
-      }
-
-      /* Cursor trail effect */
-      .trail {
+      .overlay {
         position: fixed;
-        width: 10px;
-        height: 10px;
-        background-color: #ff00de;
-        border-radius: 50%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        mix-blend-mode: multiply;
         pointer-events: none;
-        mix-blend-mode: difference;
+        background-color: rgb(220,220,220);
+        background-image: url(data:image/png;base64,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);
+
       }
 
-      /* Styling for main content */
       .wide-video-container {
         width: 100%;
         overflow: hidden;
@@ -175,19 +46,18 @@
 
       video.top-video {
         width: 100%;
+        margin-bottom: -10px;
       }
 
       main {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem;
+        max-width: 100%;
+        padding: 1rem;
         position: relative;
         z-index: 2;
       }
 
       h1, h2, h3 {
         margin-bottom: 1rem;
-        font-family: 'Courier New', Courier, monospace;
       }
 
       p, ul {
@@ -203,15 +73,28 @@
         color: #ff00de;
       }
 
+      .signup-link-container {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+
       .signup-link {
-        display: inline-block;
-        background-color: #ff00de;
-        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        max-width: 300px;
+        color: #202020;
         padding: 0.5rem 1rem;
         text-decoration: none;
         border-radius: 4px;
         margin-top: 1rem;
         transition: background-color 0.3s;
+                background-image: url(data:image/png;base64,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);
+
       }
 
       .signup-link:hover {
@@ -219,13 +102,12 @@
         color: #ff00de;
       }
 
-      /* Image grid hover effects */
       .image-grid {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        min-width: 100vw;
+        width: 100%;
         position: relative;
         z-index: 1;
         perspective: 1000px;
@@ -235,14 +117,14 @@
         flex: 0 0 auto;
         margin: 2px;
         z-index: 1;
-        width: 200px;
-        height: 200px;
+        width: calc(50% - 4px);
+        height: auto;
         transition: transform 0.3s, filter 0.3s;
       }
 
       .image-item img {
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: cover;
         backface-visibility: hidden;
       }
@@ -252,7 +134,6 @@
         filter: brightness(1.2);
       }
 
-      /* Background animation */
       body::before {
         content: '';
         position: fixed;
@@ -267,32 +148,19 @@
       }
 
       @keyframes pulse {
-        0% {
-          opacity: 0.5;
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+      }
+
+      @media (max-width: 768px) {
+        .image-item {
+          width: calc(100% - 4px);
         }
-        50% {
-          opacity: 1;
+
+        .signup-link {
+          width: 100%;
         }
-        100% {
-          opacity: 0.5;
-        }
-      }
-
-      /* Scrollbar styling */
-      ::-webkit-scrollbar {
-        width: 10px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: #000;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: #ff00de;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: #fff;
       }
     </style>
   </head>
@@ -300,128 +168,15 @@
     <div class="wide-video-container">
       <video class="top-video" src="assets/vera.webm" autoplay muted loop playsinline></video>
     </div>
-
+    <script src="sketch.js"></script>
+   
     <main>
-      <h1 class="glitch" data-text="LABRACADABRA">LABRACADABRA</h1>
-      <div class="typewriter">
-        <h2>The Untold Histories of the Future</h2>
+      <div class="signup-link-container">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrimrYRo63dSFQALbGU1E_iABYiCjCM1PR3Z3k2DqfmO1Gmw/viewform?usp=sharing" class="signup-link neon">Sign up here</a>
       </div>
-      <p>Hack/Festival at MIT Media Lab</p>
-
-      <h2 class="neon">October 15–18, 2024</h2>
-
-      <h3>October 15–17</h3>
-      <ul>
-        <li>Hackathon: E14-643</li>
-        <li>Time Capsules / Workshops with Alumni</li>
-        <li>Exhibition of previous projects</li>
-      </ul>
-
-      <h3>October 18, 2024 6pm – 1am</h3>
-      <ul>
-        <li>Party (Labaret: perform or perish): E14-300</li>
-        <li>Exhibition and Performances</li>
-      </ul>
-
-      <h2 class="neon">WHAT IS LABRACADBRA?</h2>
-      <p>Labracadabra: The Untold Histories of the Future is a new kind of event in the MIT Media Lab, where students, faculty and alumni will dive into four decades of impactful, playful, and quirky past to reimagine the future.</p>
-
-      <p>Labracadabra is:</p>
-      <ul>
-        <li>a HACKATHON where current students reimagine / recreate / revisit past Media Lab projects using new technologies and fresh perspectives.</li>
-        <li>hands-on WORKSHOPS by distinguished alumni from various eras of the lab discussing pioneering projects or interesting topics that were ahead of their time and/or out of the ordinary</li>
-        <li>an EXHIBITION showcasing historic Media Lab work as well as shining light on the untold stories that make up the lab.</li>
-        <li>the legendary 99F PARTY to cap off the week</li>
-      </ul>
-
-      <h2 class="neon">WHYYYYY?</h2>
-      <p>Bring back the MAGIC of the lab by HACKing TOGETHER across TIME</p>
-
-      <h2>More Information</h2>
-      <ul>
-        <li>RSVP: to the Hackathon and/or Party</li>
-        <li>Contribute: (travel/stay reimbursements)</li>
-        <li>Visit: tips for hotels etc</li>
-      </ul>
-
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrimrYRo63dSFQALbGU1E_iABYiCjCM1PR3Z3k2DqfmO1Gmw/viewform?usp=sharing" class="signup-link neon">Sign up here</a>
     </main>
 
-    <div class="image-grid">
-      <!-- Images will be dynamically added here -->
-    </div>
-
-    <!-- Cursor trail elements -->
     <div id="cursor"></div>
-
-
-    <script>
-      // Cursor trail effect
-      const cursor = document.createElement('div');
-      cursor.classList.add('trail');
-      document.body.appendChild(cursor);
-
-      document.addEventListener('mousemove', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-
-      // Image grid code (same as before)
-      const imageGrid = document.querySelector('.image-grid');
-
-      async function getImageFiles() {
-        const apiUrl = 'https://api.github.com/repos/mitmedialab/labracadabra/contents/docs/assets/photodump';
-        const rawContentUrl = 'https://raw.githubusercontent.com/mitmedialab/labracadabra/main/docs/assets/photodump/';
-
-        try {
-          const response = await fetch(apiUrl);
-          if (!response.ok) throw new Error('Failed to fetch directory contents');
-          const data = await response.json();
-          
-          return data
-            .filter(file => file.type === 'file' && file.name.match(/\.(jpe?g|png|gif)$/i))
-            .map(file => rawContentUrl + file.name)
-            .sort(() => Math.random() - 0.5);
-        } catch (error) {
-          console.error('Error fetching image files:', error);
-          return [];
-        }
-      }
-
-      // Function to create and add image elements
-      function addImageToGrid(imageSrc) {
-        const img = document.createElement('img');
-        img.src = imageSrc;
-        img.alt = `Image`;
-        img.onerror = () => img.style.display = 'none'; // Hide image if it fails to load
-
-        const div = document.createElement('div');
-        div.className = 'image-item';
-        // Random rotation
-        div.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-
-         // Add hover effect
-        div.addEventListener('mouseenter', () => {
-          div.style.transform = `scale(2)`;
-          div.style.height = `auto`;
-        });
-        div.addEventListener('mouseleave', () => {
-          div.style.transform = `scale(1) rotate(${Math.random() * 20 - 10}deg)`;
-          div.style.height = `200px`;
-        });
-
-        div.appendChild(img);
-        imageGrid.appendChild(div);
-      }
-
-      // Main function to load and display images
-      async function loadImages() {
-        const imageFiles = await getImageFiles();
-        imageFiles.forEach(addImageToGrid);
-      }
-
-      // Call the main function
-      loadImages();
-    </script>
+    <div class="overlay"></div>
   </body>
 </html>
