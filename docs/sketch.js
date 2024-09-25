@@ -234,6 +234,15 @@ function touchStarted() {
 
 function draw() {
   clear();
+
+  stroke(0); // Set stroke color to black
+  strokeWeight(2); // Set stroke weight
+  noFill(); // Disable fill for the stroke
+  rect (scl*5, scl*10, scl*40, scl*80)
+  noStroke();
+
+  fill(0);
+  text("HERE\nTHERE\nSHALL\nBE\nTHE\nTEXT", scl*20, scl*40);
   t += 1;
 
   // stroke('magenta');
