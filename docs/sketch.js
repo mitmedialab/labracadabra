@@ -19,6 +19,7 @@ let foodcamX, foodcamY, foodcamW, foodcamH;
 let cursorRat = false;
 let foodcamColor = false;
 let fontSize;
+let lineHeight;
 
 let lastBlendTime = 0;
 let intervalBlend = 3200;
@@ -28,8 +29,11 @@ let blending = false;
 let images = ["clocky", "blimp", "mouse", "dog", "blendie", "mack", "foodcam"]
 let objects = [];
 
+let centerX = 0;
+
 function preload() {
   font = loadFont("vera-hacked/Atlas Typewriter.otf");
+  font2 = loadFont("vera-hacked/Atlas Grotesk-Medium.otf");
 
   for (let i = 0; i < images.length; i++) {
     objects.push({
@@ -51,8 +55,12 @@ function preload() {
 function setup() {
   imageMode(CENTER);
   canvas = createCanvas(windowWidth, windowHeight);
+  console.log("window: ", windowWidth, windowHeight);
+  console.log("wxh: ", width, height);
   scl = min(width, height) / 100; // Adjust scale based on screen size
-  fontSize = scl * 4;
+  console.log("scale: ", scl);
+  fontSize = scl * 4.2;
+  lineHeight = min(width, height) / 19;
   textFont(font);
   textAlign(CENTER, CENTER);
   textSize(fontSize); // Adjust text size based on screen size
@@ -65,6 +73,15 @@ function setup() {
     }
   }
 
+  resetLayout();
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  scl = min(width, height) / 100;
+  fontSize = scl * 4.2;
+  lineHeight = min(width, height) / 19;
+  
   resetLayout();
 }
 
@@ -179,10 +196,13 @@ function outOfPyramidBounds(x, y, h) {
 }
 
 function findXY(i, w, h) {
-  let x, y;
+  let x = 0;
+  let y = 0;
 
   let allGood = false;
-  while (!allGood) {
+  let count = 0;
+  while (!allGood && count < 10000) {
+    count += 1;
     x = random(width / 2, width - w);
     y = random(0, height - h);
 
@@ -220,36 +240,50 @@ function resetLayout() {
   }
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  scl = min(width, height) / 100;
-  fontSize = scl * 5;
-  textSize(fontSize);
-  resetLayout();
-}
+
 
 function touchStarted() {
   return false;
 }
 
+function drawExplanation() {
+  // stroke(0); // Set stroke color to black
+  // strokeWeight(2); // Set stroke weight
+  // noFill(); // Disable fill for the stroke
+  // rect (scl*5, scl*5, scl*50, scl*90)
+  // noStroke();
+
+
+  let explanationFontSize = scl * 2.5;
+  let explanationLineHeight = scl * 2.66;
+  let x = scl*5;
+  let y = scl*10;
+
+  fill(0);
+  textFont("Times New Roman");
+  textAlign(LEFT);
+  // textSize(explanationFontSize);
+  // text("Media Labbers of Old and New!\n", x, y);
+}
+
 function draw() {
   clear();
 
-  stroke(0); // Set stroke color to black
-  strokeWeight(2); // Set stroke weight
-  noFill(); // Disable fill for the stroke
-  rect (scl*5, scl*10, scl*40, scl*80)
-  noStroke();
+  if (windowHeight > windowWidth) {
+    // Rotate everything by 90 degrees for portrait mode
+    translate(width / 2, height / 2);
+    rotate(HALF_PI); // 90 degrees in radians
+    translate(-height / 2, -width / 2); // Adjust the position after rotation
+  }
 
-  fill(0);
-  text("HERE\nTHERE\nSHALL\nBE\nTHE\nTEXT", scl*20, scl*40);
+  
   t += 1;
 
   // stroke('magenta');
   // strokeWeight(3);
-  //line(width / 2 + scl * 33, 0, width / 2 + scl * 6, scl * 50);
-  //line(width / 2 + scl * 6, scl * 48, width / 2 + scl * 33, scl * 98);
-  //stroke(0);
+  // line(width / 2 + scl * 33, 0, width / 2 + scl * 6, scl * 50);
+  // line(width / 2 + scl * 6, scl * 48, width / 2 + scl * 33, scl * 98);
+  // stroke(0);
 
   moveObjects();
   checkIntersections();
@@ -283,9 +317,11 @@ function draw() {
   }
 
   // Text animation
+  textFont(font);
+  textAlign(CENTER);
+  textSize(fontSize);
   let x = width / 2;
-  let lineHeight = fontSize * 1.2;
-  let yStart = lineHeight;
+  let yStart = lineHeight / 2;
 
   if (!animate && millis() - lastStartTime > intervalLong) {
     lastStartTime = millis();
@@ -312,6 +348,8 @@ function draw() {
 
   // Draw text
   drawTextPyramid(x, yStart, lineHeight);
+
+  drawExplanation();
 }
 
 function drawTextPyramid(x, yStart, lineHeight) {
@@ -321,9 +359,6 @@ function drawTextPyramid(x, yStart, lineHeight) {
     let currentLine = word.substring(0, i);
     let shiftedLine = currentLine.slice(-xOffset) + currentLine.slice(0, -xOffset);
     text(shiftedLine, x, yStart);
-    if (i == 6) {
-      text("M E D I A   ", x - width * 0.34, yStart);
-    }
     yStart += lineHeight;
   }
 
