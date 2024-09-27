@@ -10,7 +10,7 @@
         font-family: 'terminal-grotesque_open';
         src: url('assets/terminal-grotesque_open.otf') format('opentype');
       }  */
-      @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
+      /* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
         html {
           transform: rotate(-90deg);
           transform-origin: left top;
@@ -21,14 +21,15 @@
           top: 100%;
           left: 0;
         }
-      }
+      } */
 
 
       html, body {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-      }
+        font-family: Helvetica;
+            }
 
       body {
         width: 100%;
@@ -56,7 +57,7 @@
             position: relative;
             display: block;
             margin: 0 auto 10px auto;
-            width: 180px;
+            width: 40%;
             z-index: 10;
             padding: 8px 16px;
             background-color: #dcdcdc;  /* Light gray background */
@@ -64,7 +65,7 @@
             border-right-color: #808080; /* Darker right and bottom borders */
             border-bottom-color: #808080;
             font-family: Tahoma, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             color: #000;
             text-align: center;
             cursor: pointer;
@@ -87,11 +88,36 @@
         .sponsered_by {
           position: absolute;
           border: 1px solid #000;
-          bottom: 10px;
-          right: 10px;
-          padding: 5px 10px;
+          bottom: 6px;
+          right: 6px;
+          padding: 3px 6px;
           text-align: right;
+          font-size: 10px;
         }
+
+        .workshop_credits {
+          font-size: 12px;
+          font-style: italic;
+        }
+
+        li {
+          margin-bottom: 10px;
+        }
+
+        .bevel-frame {
+          margin-left: 10px; 
+          margin-right: 10px;
+          padding:12px 12px; 
+          /*background-color: rgba(222,222,222,0.5); /* Light gray background */
+          /* border: 2px solid #dcdcdc; 
+          border-top-color: white; 
+          border-left-color: white; 
+          border-bottom-color: #808080; 
+          border-right-color: #808080; 
+          box-shadow: inset 2px 2px 5px #ccc, 
+                      2px 2px 5px rgba(0,0,0,0.1); */
+          color: #000;
+      }
     </style>
   </head>
   <body>
@@ -109,41 +135,48 @@
 
     <div class="overlay"></div>
 
-    <div style="width:30%; margin-left: 20px; margin-top: 12px;">
-      <div style="padding:0px 20px; border: 1px solid #000;">
-        <h4>Attention!! Media Labbers of Old and New!</h4>
+    <div style="width:38.195%; padding: 10px 0px;border-right: 1px solid #000; height: 100vh;">
+      <div class="bevel-frame">
+        <b>Step right up! Step right up!</b>
   
-        <p align="justify">In preparation for the upcoming <b>40th anniversary</b> of the MIT Media Lab (Oct 2025), prepare yourselves to be <b>dazzled</b> and <b>bewildered</b> by the most <i>spectacular</i> show this side of reality!</p>
+        <p align="justify">In preparation for the upcoming <b>40th anniversary</b> of the MIT Media Lab (Oct 2025), prepare yourselves to be <i>dazzled</i> and <i>bewildered</i> by the most <i>spectacular</i> show this side of reality!</p>
         <p>Welcome to...</p>
         <h2 style="padding-left:20px;">LABRACADABRA</h2>
         <h3 style="text-align:center">The Untold Histories of the Future</h3>
         <h4 style="text-align:right; padding-right:20px;">15-18 Oct 2024</h4>
   
         <p align="justify">We invite you to co-create in this week-long <i>future-history</i> festival where students, alumni, staff, and faculty will dive into four decades of impactful, playful, and quirky past to <b>re-imagine</b> our vision for the future.</p>
-  
+        
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrimrYRo63dSFQALbGU1E_iABYiCjCM1PR3Z3k2DqfmO1Gmw/viewform?usp=sharing"  class="ie-button">SIGN UP TODAY!!</a>
+        <br />
         <p>
         What is LABRACADABRA??!?<br />
         <ul>
           <li>a <u>HACKATHON</u> where current students and lab friends hack together to <b>re-visit</b> past Media Lab projects using new technologies and fresh perspectives.
           <li>hands-on <u>WORKSHOPS</u> (a.k.a <i>TIME CAPSULES</i>) by distinguished alumni from various eras:
-              <ul>
-                <li><b>The Machine Cabaret</b> (by Kelly Dobson <i>MAS02'</i> & Sophia Brueckner <i>MAS14'</i>)</li>
-                <li><b>Social Fabrics Re-imagined</b>: From Attention Economies to Intention Ecologies (by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, Rubez Chong <i>MAS20'</i>)</li>
-                <li><b>The Cardboard Research Institute</b> (by Che-Wei Wang <i>MAS15'</i> & Jonathan Bobrow <i>MAS16'</i>)</li>
-                <li><b>Media Lab Confessionals</b>: Generative Critique (by Alexis Hope <i>MAS21'</i> & ???)</li>
-              </ul>
+              <!-- <ul>
+                <li><b>The Machine Cabaret</b> <span class="workshop_credits">(by Kelly Dobson <i>MAS02'</i> & Sophia Brueckner <i>MAS14'</i>)</span></li>
+                <li><b>Social Fabrics Re-imagined</b>: From Attention Economies to Intention Ecologies <span class="workshop_credits">(by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, Rubez Chong <i>MAS20'</i>)</span></li>
+                <li><b>The Cardboard Research Institute</b> <span class="workshop_credits">(by Che-Wei Wang <i>MAS15'</i> & Jonathan Bobrow <i>MAS16'</i>)</span></li>
+                <li><b>Media Lab Confessionals</b>: Generative Critique <span class="workshop_credits">(by Alexis Hope <i>MAS21'</i> & ???)</span></li>
+              </ul> -->
           
           </li>
   
           <li>an <u>EXHIBITION</u> showcasing historic Media Lab pieces and <b>untold</b> stories that make up the lab. Do you have artefacts to contribute? <a href="mailto:vdanry@mit.edu">Email us!</a></li>
   
+          <li>the first-of-its-kind <i>LABARET</i> (think Cabaret but it's the Media Lab... :) where the results of the hackathon and the workshops will be performed and live-demoed. Perform or perish!</b></li>
+
           <li>the legendary <b>99Fridays</b> <u>PARTY</u> to cap off the week!</li>
   
         </ul>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrimrYRo63dSFQALbGU1E_iABYiCjCM1PR3Z3k2DqfmO1Gmw/viewform?usp=sharing"  class="ie-button">SIGN UP TODAY!!</a>
+        <br />
+
+        <a href=""  class="ie-button">THE AWESOME SCHEDULE</a>
+
       </div>
     </div>
 
-    <div class="sponsered_by">organized by Studcom<br/> supported by E14 Fund and the MIT Media Lab</div>
+    <div class="sponsered_by">organized by Studcom<br/> supported by E14 Fund and MIT Media Lab</div>
   </body>
 </html>

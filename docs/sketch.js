@@ -1,5 +1,6 @@
 let font;
-let word = "L A B R A C A D A B R A ";
+//let word = "L A B R A C A D A B R A ";
+let word = "L  A  B  R  A  C  A  D  A  B  R  A  ";
 let xOffset = 0;
 let xOffsetBottom = 0;
 let shiftDir = 1;
@@ -20,13 +21,19 @@ let cursorRat = false;
 let foodcamColor = false;
 let fontSize;
 let lineHeight;
+let actualWidth;
+let pyramidHeight;
+let marginLeft;
+let rightLineX1, rightLineY1, rightLineX2, rightLineY2;
+let leftLineX1, leftLineY1, leftLineX2, leftLineY2;
+
 
 let lastBlendTime = 0;
 let intervalBlend = 3200;
 let blendTime = 600;
 let blending = false;
 
-let images = ["clocky", "blimp", "mouse", "dog", "blendie", "mack", "foodcam"]
+let images = ["clocky", "blimp", "mouse", "dog", "blendie", "mack", "foodcam", "squirrel"]
 let objects = [];
 
 let centerX = 0;
@@ -40,7 +47,7 @@ function preload() {
       img: loadImage("img/" + images[i] + ".png"),
       name: images[i],
       randomScale: random(0.7, 1.2),
-      v: createVector(random(-1.5, 1.5), random(-1.5, 1.5)),
+      v: createVector(random(-1.5, 1.5), random(0, 2.5)),
       mass: random(10,20),
       w: 0,
       h : 0,
@@ -59,8 +66,11 @@ function setup() {
   console.log("wxh: ", width, height);
   scl = min(width, height) / 100; // Adjust scale based on screen size
   console.log("scale: ", scl);
-  fontSize = scl * 4.2;
-  lineHeight = min(width, height) / 19;
+  actualWidth = width / 1.618;
+  marginLeft = width - actualWidth;
+  pyramidHeight = height / 1.618;
+  lineHeight = pyramidHeight / 19;
+  fontSize = lineHeight * 0.95;
   textFont(font);
   textAlign(CENTER, CENTER);
   textSize(fontSize); // Adjust text size based on screen size
@@ -79,8 +89,11 @@ function setup() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   scl = min(width, height) / 100;
-  fontSize = scl * 4.2;
-  lineHeight = min(width, height) / 19;
+  actualWidth = width / 1.618;
+  marginLeft = width - actualWidth;
+  pyramidHeight = height / 1.618;
+  lineHeight = pyramidHeight / 19;
+  fontSize = lineHeight * 0.95;
   
   resetLayout();
 }
@@ -105,14 +118,18 @@ function moveObjects() {
     obj.x += obj.v.x;
     obj.y += obj.v.y;
   
-    if (obj.x < width / 2 || obj.x + obj.w > width) {
+    if (obj.x < marginLeft || obj.x + obj.w > width) {
       obj.v.x = -obj.v.x;
       obj.x += obj.v.x;
     }
 
-    if (obj.y < 0 || obj.y + obj.h > height) {
+    if (obj.y + obj.h < 0) {
       obj.v.y = -obj.v.y;
       obj.y += obj.v.y;
+    }
+
+    if (obj.y > height + obj.h) {
+      obj.y = -obj.h;
     }
   }
 }
@@ -130,9 +147,10 @@ function checkIntersections() {
     let x = objects[i].x;
     let y = objects[i].y;
     let h = objects[i].h;
-    if (checkPositionRelativeToLine(x, y, width / 2 + scl * 33, 0, width / 2 + scl * 6, scl * 50) >= 0) {
+    
+    if (x > marginLeft + actualWidth / 2 && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
       // Normal to the line
-      let normalVec = createVector(50, 27).normalize();  // Perpendicular to the line
+      let normalVec = createVector(rightLineY2 - rightLineY1, rightLineX1 - rightLineX2).normalize();  // Perpendicular to the line
       
       // Reflection formula: V' = V - 2 * (V dot N) * N
       let dotProduct = objects[i].v.dot(normalVec);
@@ -140,9 +158,9 @@ function checkIntersections() {
 
       // Update the ball's velocity
       objects[i].v.set(reflection);
-    } else if (checkPositionRelativeToLine(x, y+h, width / 2 + scl * 6, scl * 48, width / 2 + scl * 33, scl * 98) >= 0) {
+    } else if (x < marginLeft + actualWidth / 2 && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
       // Normal to the line
-      let normalVec = createVector(50, -27).normalize();  // Perpendicular to the line
+      let normalVec = createVector(leftLineY2 - leftLineY1, leftLineX1 - leftLineX2).normalize();  // Perpendicular to the line
       
       // Reflection formula: V' = V - 2 * (V dot N) * N
       let dotProduct = objects[i].v.dot(normalVec);
@@ -191,10 +209,6 @@ function checkIntersections() {
 
 }
 
-function outOfPyramidBounds(x, y, h) {
-  return checkPositionRelativeToLine(x, y, width / 2 + scl * 33, 0, width / 2 + scl * 6, scl * 50) >= 0 || checkPositionRelativeToLine(x, y+h, width / 2 + scl * 6, scl * 48, width / 2 + scl * 33, scl * 98) >= 0;
-}
-
 function findXY(i, w, h) {
   let x = 0;
   let y = 0;
@@ -203,16 +217,10 @@ function findXY(i, w, h) {
   let count = 0;
   while (!allGood && count < 10000) {
     count += 1;
-    x = random(width / 2, width - w);
-    y = random(0, height - h);
+    x = random(marginLeft + actualWidth / 2 - fontSize * 12, marginLeft + actualWidth / 2 + fontSize * 12);
+    y = random(0, lineHeight * 3);
 
     allGood = true;
-
-    // check if it intersects the pyramid
-    if (outOfPyramidBounds(x, y, h)) {
-      allGood = false;
-      continue;
-    }
 
     for (let j = 0; j < objects.length; j++) {
       if (i == j) continue;
@@ -229,7 +237,7 @@ function findXY(i, w, h) {
 function resetLayout() {
   for (let i = 0; i < objects.length; i++) {
     let maxWH = max(objects[i].img.width , objects[i].img.height );
-    let scale = scl * 20 * objects[i].randomScale;
+    let scale = scl * 9 * objects[i].randomScale;
 
     objects[i].w = objects[i].img.width / maxWH * scale;
     objects[i].h = objects[i].img.height / maxWH * scale;
@@ -279,10 +287,21 @@ function draw() {
   
   t += 1;
 
+  rightLineX1 = marginLeft + actualWidth / 2 - fontSize*8;
+  rightLineY1 = height;
+  rightLineX2 = marginLeft + actualWidth / 2 + fontSize * 10;
+  rightLineY2 = height - pyramidHeight + lineHeight / 2;
+
+  leftLineX1 = marginLeft + actualWidth / 2 + fontSize*6.5;
+  leftLineY1 = height;
+  leftLineX2 = marginLeft + actualWidth / 2 - fontSize * 11.5;
+  leftLineY2 = height - pyramidHeight + lineHeight / 2;
+
+
   // stroke('magenta');
   // strokeWeight(3);
-  // line(width / 2 + scl * 33, 0, width / 2 + scl * 6, scl * 50);
-  // line(width / 2 + scl * 6, scl * 48, width / 2 + scl * 33, scl * 98);
+  // line(rightLineX1, rightLineY1, rightLineX2, rightLineY2);
+  // line(leftLineX1, leftLineY1, leftLineX2, leftLineY2);
   // stroke(0);
 
   moveObjects();
@@ -320,8 +339,10 @@ function draw() {
   textFont(font);
   textAlign(CENTER);
   textSize(fontSize);
-  let x = width / 2;
-  let yStart = lineHeight / 2;
+
+  // change this on mobile
+  let x = marginLeft + actualWidth / 2;
+  let yStart = height - pyramidHeight + lineHeight / 2;
 
   if (!animate && millis() - lastStartTime > intervalLong) {
     lastStartTime = millis();
@@ -333,8 +354,8 @@ function draw() {
   }
 
   if (animate && millis() - lastShiftTime > intervalShort) {
-    xOffset += 2 * shiftDir;
-    xOffsetBottom += 2 * bottomShiftDir;
+    xOffset += 3 * shiftDir;
+    xOffsetBottom += 3 * bottomShiftDir;
     lastShiftTime = millis();
     lastStartTime = millis();
   }
@@ -354,7 +375,7 @@ function draw() {
 
 function drawTextPyramid(x, yStart, lineHeight) {
   // Top triangle
-  for (let i = word.length; i > 6; i -= 2) {
+  for (let i = word.length; i > 9; i -= 3) {
     fill(i == word.length ? 0 : 69);
     let currentLine = word.substring(0, i);
     let shiftedLine = currentLine.slice(-xOffset) + currentLine.slice(0, -xOffset);
@@ -363,13 +384,13 @@ function drawTextPyramid(x, yStart, lineHeight) {
   }
 
   // Middle
-  let currentLine = word.substring(0, 6);
+  let currentLine = word.substring(0, 9);
   let shiftedLine = currentLine.slice(-xOffset) + currentLine.slice(0, -xOffset);
   text(shiftedLine, x, yStart);
   yStart += lineHeight;
 
   // Bottom triangle
-  for (let i = 8; i <= word.length; i += 2) {
+  for (let i = 12; i <= word.length; i += 3) {
     fill(i == word.length ? 0 : 69);
     let currentLine = word.substring(0, i);
     let shiftedLine = currentLine.slice(-xOffsetBottom) + currentLine.slice(0, -xOffsetBottom);
