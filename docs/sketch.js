@@ -68,6 +68,7 @@ function setup() {
   console.log("scale: ", scl);
   actualWidth = width / 1.618;
   marginLeft = width - actualWidth;
+  pyramidCenter = marginLeft + actualWidth / 2;
   pyramidHeight = height / 1.618;
   lineHeight = pyramidHeight / 19;
   fontSize = lineHeight * 0.95;
@@ -92,6 +93,7 @@ function windowResized() {
   actualWidth = width / 1.618;
   marginLeft = width - actualWidth;
   pyramidHeight = height / 1.618;
+  pyramidCenter = marginLeft + actualWidth / 2;
   lineHeight = pyramidHeight / 19;
   fontSize = lineHeight * 0.95;
   
@@ -148,7 +150,7 @@ function checkIntersections() {
     let y = objects[i].y;
     let h = objects[i].h;
     
-    if (x > marginLeft + actualWidth / 2 && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
+    if (x > pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
       // Normal to the line
       let normalVec = createVector(rightLineY2 - rightLineY1, rightLineX1 - rightLineX2).normalize();  // Perpendicular to the line
       
@@ -158,7 +160,7 @@ function checkIntersections() {
 
       // Update the ball's velocity
       objects[i].v.set(reflection);
-    } else if (x < marginLeft + actualWidth / 2 && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
+    } else if (x < pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
       // Normal to the line
       let normalVec = createVector(leftLineY2 - leftLineY1, leftLineX1 - leftLineX2).normalize();  // Perpendicular to the line
       
@@ -217,7 +219,7 @@ function findXY(i, w, h) {
   let count = 0;
   while (!allGood && count < 10000) {
     count += 1;
-    x = random(marginLeft + actualWidth / 2 - fontSize * 12, marginLeft + actualWidth / 2 + fontSize * 12);
+    x = random(pyramidCenter - fontSize * 12,pyramidCenter + fontSize * 12);
     y = random(0, lineHeight * 3);
 
     allGood = true;
@@ -237,7 +239,7 @@ function findXY(i, w, h) {
 function resetLayout() {
   for (let i = 0; i < objects.length; i++) {
     let maxWH = max(objects[i].img.width , objects[i].img.height );
-    let scale = scl * 9 * objects[i].randomScale;
+    let scale = scl * 12 * objects[i].randomScale;
 
     objects[i].w = objects[i].img.width / maxWH * scale;
     objects[i].h = objects[i].img.height / maxWH * scale;
@@ -247,8 +249,6 @@ function resetLayout() {
     objects[i].y = xy[1];
   }
 }
-
-
 
 function touchStarted() {
   return false;
@@ -284,17 +284,23 @@ function draw() {
     translate(-height / 2, -width / 2); // Adjust the position after rotation
   }
 
+  if (keyIsDown(RIGHT_ARROW)) {
+    pyramidCenter += 1;
+  } else if (keyIsDown(LEFT_ARROW)) {
+    pyramidCenter -= 1;
+  }
+
   
   t += 1;
 
-  rightLineX1 = marginLeft + actualWidth / 2 - fontSize*8;
+  rightLineX1 = pyramidCenter - fontSize*8;
   rightLineY1 = height;
-  rightLineX2 = marginLeft + actualWidth / 2 + fontSize * 10;
+  rightLineX2 = pyramidCenter + fontSize * 10;
   rightLineY2 = height - pyramidHeight + lineHeight / 2;
 
-  leftLineX1 = marginLeft + actualWidth / 2 + fontSize*6.5;
+  leftLineX1 = pyramidCenter + fontSize*6.5;
   leftLineY1 = height;
-  leftLineX2 = marginLeft + actualWidth / 2 - fontSize * 11.5;
+  leftLineX2 = pyramidCenter - fontSize * 11.5;
   leftLineY2 = height - pyramidHeight + lineHeight / 2;
 
 
@@ -341,7 +347,7 @@ function draw() {
   textSize(fontSize);
 
   // change this on mobile
-  let x = marginLeft + actualWidth / 2;
+  let x = pyramidCenter;
   let yStart = height - pyramidHeight + lineHeight / 2;
 
   if (!animate && millis() - lastStartTime > intervalLong) {
