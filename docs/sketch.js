@@ -23,9 +23,11 @@ let fontSize;
 let lineHeight;
 let actualWidth;
 let pyramidHeight;
+let pyramidTop;
 let marginLeft;
 let rightLineX1, rightLineY1, rightLineX2, rightLineY2;
 let leftLineX1, leftLineY1, leftLineX2, leftLineY2;
+
 
 
 let lastBlendTime = 0;
@@ -66,12 +68,26 @@ function setup() {
   console.log("wxh: ", width, height);
   scl = min(width, height) / 100; // Adjust scale based on screen size
   console.log("scale: ", scl);
-  actualWidth = width / 1.618;
-  marginLeft = width - actualWidth;
-  pyramidCenter = marginLeft + actualWidth / 2;
-  pyramidHeight = height / 1.618;
-  lineHeight = pyramidHeight / 19;
-  fontSize = lineHeight * 0.95;
+
+  if (windowWidth >= windowHeight) {
+    actualWidth = width / 1.618;
+    marginLeft = width - actualWidth;
+    pyramidCenter = marginLeft + actualWidth / 2;
+    pyramidHeight = height / 1.618;
+    lineHeight = pyramidHeight / 19;
+    fontSize = lineHeight * 0.95;
+    pyramidTop = height - pyramidHeight + lineHeight / 2;
+  } else {
+    actualWidth = width / 2;
+    marginLeft = 0;
+    pyramidCenter = actualWidth / 2;
+    pyramidHeight = 200;
+    lineHeight = pyramidHeight / 19;
+    fontSize = lineHeight;
+    pyramidTop = lineHeight / 2;
+    scl *= 0.666;
+  }
+  
   textFont(font);
   textAlign(CENTER, CENTER);
   textSize(fontSize); // Adjust text size based on screen size
@@ -90,12 +106,24 @@ function setup() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   scl = min(width, height) / 100;
-  actualWidth = width / 1.618;
-  marginLeft = width - actualWidth;
-  pyramidHeight = height / 1.618;
-  pyramidCenter = marginLeft + actualWidth / 2;
-  lineHeight = pyramidHeight / 19;
-  fontSize = lineHeight * 0.95;
+  if (windowWidth >= windowHeight) {
+    actualWidth = width / 1.618;
+    marginLeft = width - actualWidth;
+    pyramidCenter = marginLeft + actualWidth / 2;
+    pyramidHeight = height / 1.618;
+    lineHeight = pyramidHeight / 19;
+    fontSize = lineHeight * 0.95;
+    pyramidTop = height - pyramidHeight + lineHeight / 2;
+  } else {
+    actualWidth = width / 2;
+    marginLeft = 0;
+    pyramidCenter = actualWidth / 2;
+    pyramidHeight = 200;
+    lineHeight = pyramidHeight / 19;
+    fontSize = lineHeight;
+    pyramidTop = lineHeight / 2;
+    scl *= 0.666;
+  }
   
   resetLayout();
 }
@@ -239,7 +267,7 @@ function findXY(i, w, h) {
 function resetLayout() {
   for (let i = 0; i < objects.length; i++) {
     let maxWH = max(objects[i].img.width , objects[i].img.height );
-    let scale = scl * 12 * objects[i].randomScale;
+    let scale = scl * 10 * objects[i].randomScale;
 
     objects[i].w = objects[i].img.width / maxWH * scale;
     objects[i].h = objects[i].img.height / maxWH * scale;
@@ -254,35 +282,8 @@ function touchStarted() {
   return false;
 }
 
-function drawExplanation() {
-  // stroke(0); // Set stroke color to black
-  // strokeWeight(2); // Set stroke weight
-  // noFill(); // Disable fill for the stroke
-  // rect (scl*5, scl*5, scl*50, scl*90)
-  // noStroke();
-
-
-  let explanationFontSize = scl * 2.5;
-  let explanationLineHeight = scl * 2.66;
-  let x = scl*5;
-  let y = scl*10;
-
-  fill(0);
-  textFont("Times New Roman");
-  textAlign(LEFT);
-  // textSize(explanationFontSize);
-  // text("Media Labbers of Old and New!\n", x, y);
-}
-
 function draw() {
   clear();
-
-  if (windowHeight > windowWidth) {
-    // Rotate everything by 90 degrees for portrait mode
-    translate(width / 2, height / 2);
-    rotate(HALF_PI); // 90 degrees in radians
-    translate(-height / 2, -width / 2); // Adjust the position after rotation
-  }
 
   if (keyIsDown(RIGHT_ARROW)) {
     pyramidCenter += 1;
@@ -348,7 +349,7 @@ function draw() {
 
   // change this on mobile
   let x = pyramidCenter;
-  let yStart = height - pyramidHeight + lineHeight / 2;
+  let yStart = pyramidTop; 
 
   if (!animate && millis() - lastStartTime > intervalLong) {
     lastStartTime = millis();
@@ -375,8 +376,6 @@ function draw() {
 
   // Draw text
   drawTextPyramid(x, yStart, lineHeight);
-
-  drawExplanation();
 }
 
 function drawTextPyramid(x, yStart, lineHeight) {

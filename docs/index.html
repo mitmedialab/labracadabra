@@ -6,28 +6,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-      /* @font-face {
-        font-family: 'terminal-grotesque_open';
-        src: url('assets/terminal-grotesque_open.otf') format('opentype');
-      }  */
-      /* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
-        html {
-          transform: rotate(-90deg);
-          transform-origin: left top;
-          width: 100vh;
-          height: 100vw;
-          overflow-x: hidden;
-          position: absolute;
-          top: 100%;
-          left: 0;
-        }
-      } */
 
 
-      html, body {
+      html body {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
         font-family: Helvetica;
             }
 
@@ -86,7 +69,7 @@
         }
 
         .sponsered_by {
-          position: absolute;
+          position: relative;
           border: 1px solid #000;
           bottom: 6px;
           right: 6px;
@@ -104,7 +87,14 @@
           margin-bottom: 10px;
         }
 
-        .bevel-frame {
+        .explanation-outer {
+          width:38.195%; 
+          padding: 10px 0px;
+          border-right: 1px solid #000; 
+          height: 100vh;
+        }
+
+        .explanation-inner {
           margin-left: 10px; 
           margin-right: 10px;
           padding:12px 12px; 
@@ -117,6 +107,27 @@
           box-shadow: inset 2px 2px 5px #ccc, 
                       2px 2px 5px rgba(0,0,0,0.1); */
           color: #000;
+      }
+
+      @media only screen and (orientation: portrait) {
+          /* Styles for mobile portrait mode */
+          .explanation-outer {
+            width:100%; 
+            padding: 0px;
+            padding-top:200px;
+          }
+
+          .explanation-inner {
+            margin-left: 10px; 
+            margin-right: 10px;
+            padding:12px 12px; 
+          }
+
+          .sponsered_by {
+            width: 200px;
+            position: relative;
+            margin: 350px 0 0 auto;
+          }
       }
     </style>
   </head>
@@ -133,10 +144,8 @@
       </div> -->
     </main>
 
-    <div class="overlay"></div>
-
-    <div style="width:38.195%; padding: 10px 0px;border-right: 1px solid #000; height: 100vh;">
-      <div class="bevel-frame">
+    <div class="explanation-outer">
+      <div class="explanation-inner">
         <b>Step right up! Step right up!</b>
   
         <p align="justify">In preparation for the upcoming <b>40th anniversary</b> of the MIT Media Lab (Oct 2025), prepare yourselves to be <i>dazzled</i> and <i>bewildered</i> by the most <i>spectacular</i> show this side of reality!</p>
