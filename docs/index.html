@@ -18,10 +18,17 @@
       body {
         width: 100%;
       height: 100vh;
-      /* background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+      background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
                   url('img/4k-noise.jpg'); 
       background-size: cover;
-      background-position: center; */
+      background-position: center;
+      }
+
+      main {
+        max-width: 100%;
+        padding: 1rem;
+        position: relative;
+        z-index: 2;
       }
       
       canvas {
@@ -115,6 +122,11 @@
 
       @media only screen and (orientation: portrait) {
           /* Styles for mobile portrait mode */
+          body {
+
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                  url('img/low-noise.jpg'); 
+          }
           /* body {
             background: none;
             background-color: rgb(220,220,220);
