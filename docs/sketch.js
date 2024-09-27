@@ -121,6 +121,7 @@ function windowResized() {
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
+    resetLayout();
   } else {
     actualWidth = width * 0.4;
     marginLeft = 0;
@@ -132,7 +133,7 @@ function windowResized() {
     scl *= 0.666;
   }
   
-  resetLayout();
+  
 }
 
 function isOverlapping(x1, y1, w1, h1, obj) {
