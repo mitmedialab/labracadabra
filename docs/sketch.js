@@ -86,10 +86,12 @@ function setup() {
     actualWidth = width * 0.4;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
-    pyramidHeight = 200;
+    pyramidHeight = 240;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
+    pyramidCenter = fontSize * 15;
+    actualWidth = pyramidCenter * 2;
     scl *= 0.666;
   }
   
@@ -121,15 +123,17 @@ function windowResized() {
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
-    resetLayout();    
+    resetLayout();  
   } else {
     actualWidth = width * 0.4;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
-    pyramidHeight = 200;
+    pyramidHeight = 240;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
+    pyramidCenter = fontSize * 15;
+    actualWidth = pyramidCenter * 2;
     scl *= 0.666;
   }
 
