@@ -8,7 +8,7 @@ let bottomShiftDir = 1;
 let animate = false;
 let lastStartTime = 0;
 let lastShiftTime = 0;
-let intervalLong = 1000;
+let intervalLong = 200;
 let intervalShort = 60;
 let blurAmount = 1;
 let canvas;
@@ -121,7 +121,7 @@ function windowResized() {
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
-    resetLayout();
+    resetLayout();    
   } else {
     actualWidth = width * 0.4;
     marginLeft = 0;
@@ -132,6 +132,7 @@ function windowResized() {
     pyramidTop = lineHeight / 2;
     scl *= 0.666;
   }
+
   
   
 }
