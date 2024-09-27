@@ -193,7 +193,7 @@ function checkIntersections() {
       let h = objects[i].h;
 
       
-      if (x > pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
+      if (x > pyramidCenter && y + h / 2 < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
         // Normal to the line
         let normalVec = createVector(rightLineY2 - rightLineY1, rightLineX1 - rightLineX2).normalize();  // Perpendicular to the line
         
@@ -203,7 +203,7 @@ function checkIntersections() {
   
         // Update the ball's velocity
         objects[i].v.set(reflection);
-      } else if (x < pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
+      } else if (x < pyramidCenter && y + h / 2 < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
         // Normal to the line
         let normalVec = createVector(leftLineY2 - leftLineY1, leftLineX1 - leftLineX2).normalize();  // Perpendicular to the line
         
