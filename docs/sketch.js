@@ -27,6 +27,7 @@ let pyramidTop;
 let marginLeft;
 let rightLineX1, rightLineY1, rightLineX2, rightLineY2;
 let leftLineX1, leftLineY1, leftLineX2, leftLineY2;
+let loadTime;
 
 
 
@@ -78,7 +79,7 @@ function setup() {
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
   } else {
-    actualWidth = width / 2;
+    actualWidth = width * 0.4;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
     pyramidHeight = 200;
@@ -101,6 +102,7 @@ function setup() {
   }
 
   resetLayout();
+  loadTime = millis();
 }
 
 function windowResized() {
@@ -115,9 +117,9 @@ function windowResized() {
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
   } else {
-    actualWidth = width / 2;
+    actualWidth = width;
     marginLeft = 0;
-    pyramidCenter = actualWidth / 2;
+    pyramidCenter = actualWidth / 4;
     pyramidHeight = 200;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
@@ -247,12 +249,18 @@ function findXY(i, w, h) {
   let x = 0;
   let y = 0;
 
+  if (isMobile()) {
+    x = random(pyramidCenter - fontSize * 12,pyramidCenter + fontSize * 12);
+    y = -h;
+    return [x, y];
+  }
+
   let allGood = false;
   let count = 0;
   while (!allGood && count < 10000) {
     count += 1;
-    x = random(pyramidCenter - fontSize * 12,pyramidCenter + fontSize * 12);
-    y = random(0, lineHeight * 3);
+    x = random(marginLeft, marginLeft+actualWidth);
+    y = -h;
 
     allGood = true;
 
@@ -282,18 +290,14 @@ function resetLayout() {
   }
 }
 
-function touchStarted() {
-  return false;
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 function draw() {
   clear();
 
-  if (keyIsDown(RIGHT_ARROW)) {
-    pyramidCenter += 1;
-  } else if (keyIsDown(LEFT_ARROW)) {
-    pyramidCenter -= 1;
-  }
+  
 
   
   t += 1;
@@ -315,36 +319,48 @@ function draw() {
   // line(leftLineX1, leftLineY1, leftLineX2, leftLineY2);
   // stroke(0);
 
-  moveObjects();
-  checkIntersections();
-
-  for (let i = 0; i < objects.length; i++) {
-
-    if (!objects[i].isBlendie) {
-      push();  // Save the current transformation matrix
-      translate(objects[i].x + objects[i].w / 2, objects[i].y + objects[i].h / 2);
-      rotate(t / 100);
-
-      // Display the image
-      image(objects[i].img, 0, 0, objects[i].w, objects[i].h);  // Adjust size if needed
-      pop();   // Restore the original transformation matrix
-
-      //image(objects[i].img, objects[i].x, objects[i].y, objects[i].w, objects[i].h);
-    } else {
-      // Blendie
-      if (millis() - lastBlendTime > intervalBlend) {
-        blending = true;
+  if (millis() - loadTime > 1000) {
+    moveObjects();
+    if (!isMobile()) {
+      checkIntersections();
+  
+      if (keyIsDown(RIGHT_ARROW)) {
+        pyramidCenter += 1;
+      } else if (keyIsDown(LEFT_ARROW)) {
+        pyramidCenter -= 1;
       }
-      if (millis() - lastBlendTime > intervalBlend + blendTime) {
-        blending = false;
-        lastBlendTime = millis();
-        intervalBlend = random(1000, 3000);
+    }
+    
+  
+    for (let i = 0; i < objects.length; i++) {
+  
+      if (!objects[i].isBlendie) {
+        push();  // Save the current transformation matrix
+        translate(objects[i].x + objects[i].w / 2, objects[i].y + objects[i].h / 2);
+        rotate(t / 100);
+  
+        // Display the image
+        image(objects[i].img, 0, 0, objects[i].w, objects[i].h);  // Adjust size if needed
+        pop();   // Restore the original transformation matrix
+  
+        //image(objects[i].img, objects[i].x, objects[i].y, objects[i].w, objects[i].h);
+      } else {
+        // Blendie
+        if (millis() - lastBlendTime > intervalBlend) {
+          blending = true;
+        }
+        if (millis() - lastBlendTime > intervalBlend + blendTime) {
+          blending = false;
+          lastBlendTime = millis();
+          intervalBlend = random(1000, 3000);
+        }
+  
+        let noise = blending ? sin(t*10000) * scl * 0.6 : 0;
+        image(objects[i].img, objects[i].x + noise, objects[i].y, objects[i].w, objects[i].h);
       }
-
-      let noise = blending ? sin(t*10000) * scl * 0.6 : 0;
-      image(objects[i].img, objects[i].x + noise, objects[i].y, objects[i].w, objects[i].h);
     }
   }
+
 
   // Text animation
   textFont(font);
