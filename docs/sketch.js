@@ -63,6 +63,10 @@ function preload() {
 }
 
 function setup() {
+  pixelDensity(1);
+  // if (isMobile()) {
+  //   return;
+  // }
   imageMode(CENTER);
   canvas = createCanvas(windowWidth, windowHeight);
   console.log("window: ", windowWidth, windowHeight);
@@ -296,6 +300,10 @@ function isMobile() {
 }
 
 function draw() {
+  // if (isMobile()) {
+  //   return;
+  // }
+
   clear();
 
   
