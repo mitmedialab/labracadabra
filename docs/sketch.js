@@ -173,33 +173,37 @@ function reflectVelocity(ball, p1, p2) {
 
 function checkIntersections() {
 
-  for (let i = 0; i < objects.length; i++) {
-    let x = objects[i].x;
-    let y = objects[i].y;
-    let h = objects[i].h;
-    
-    if (x > pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
-      // Normal to the line
-      let normalVec = createVector(rightLineY2 - rightLineY1, rightLineX1 - rightLineX2).normalize();  // Perpendicular to the line
-      
-      // Reflection formula: V' = V - 2 * (V dot N) * N
-      let dotProduct = objects[i].v.dot(normalVec);
-      let reflection = p5.Vector.sub(objects[i].v, p5.Vector.mult(normalVec, 2 * dotProduct));
+  if (windowWidth > windowHeight) {
+    for (let i = 0; i < objects.length; i++) {
+      let x = objects[i].x;
+      let y = objects[i].y;
+      let h = objects[i].h;
 
-      // Update the ball's velocity
-      objects[i].v.set(reflection);
-    } else if (x < pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
-      // Normal to the line
-      let normalVec = createVector(leftLineY2 - leftLineY1, leftLineX1 - leftLineX2).normalize();  // Perpendicular to the line
       
-      // Reflection formula: V' = V - 2 * (V dot N) * N
-      let dotProduct = objects[i].v.dot(normalVec);
-      let reflection = p5.Vector.sub(objects[i].v, p5.Vector.mult(normalVec, 2 * dotProduct));
-
-      // Update the ball's velocity
-      objects[i].v.set(reflection);
-    }
+      if (x > pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, rightLineX1, rightLineY1, rightLineX2, rightLineY2) >= 0) {
+        // Normal to the line
+        let normalVec = createVector(rightLineY2 - rightLineY1, rightLineX1 - rightLineX2).normalize();  // Perpendicular to the line
+        
+        // Reflection formula: V' = V - 2 * (V dot N) * N
+        let dotProduct = objects[i].v.dot(normalVec);
+        let reflection = p5.Vector.sub(objects[i].v, p5.Vector.mult(normalVec, 2 * dotProduct));
+  
+        // Update the ball's velocity
+        objects[i].v.set(reflection);
+      } else if (x < pyramidCenter && y < height - pyramidHeight / 2 && checkPositionRelativeToLine(x, y+h, leftLineX1, leftLineY1, leftLineX2, leftLineY2) < 0) {
+        // Normal to the line
+        let normalVec = createVector(leftLineY2 - leftLineY1, leftLineX1 - leftLineX2).normalize();  // Perpendicular to the line
+        
+        // Reflection formula: V' = V - 2 * (V dot N) * N
+        let dotProduct = objects[i].v.dot(normalVec);
+        let reflection = p5.Vector.sub(objects[i].v, p5.Vector.mult(normalVec, 2 * dotProduct));
+  
+        // Update the ball's velocity
+        objects[i].v.set(reflection);
+      }
+    }  
   }
+    
 
   for (let i = 0; i < objects.length - 1; i++) {
     for (let j = i + 1; j < objects.length; j++) {
