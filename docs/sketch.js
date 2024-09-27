@@ -8,7 +8,7 @@ let bottomShiftDir = 1;
 let animate = false;
 let lastStartTime = 0;
 let lastShiftTime = 0;
-let intervalLong = 1500;
+let intervalLong = 1000;
 let intervalShort = 60;
 let blurAmount = 1;
 let canvas;
@@ -103,6 +103,7 @@ function setup() {
 
   resetLayout();
   loadTime = millis();
+  lastStartTime = millis();
 }
 
 function windowResized() {
@@ -117,9 +118,9 @@ function windowResized() {
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
   } else {
-    actualWidth = width;
+    actualWidth = width * 0.4;
     marginLeft = 0;
-    pyramidCenter = actualWidth / 4;
+    pyramidCenter = actualWidth / 2;
     pyramidHeight = 200;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
@@ -279,7 +280,7 @@ function findXY(i, w, h) {
 function resetLayout() {
   for (let i = 0; i < objects.length; i++) {
     let maxWH = max(objects[i].img.width , objects[i].img.height );
-    let scale = scl * 10 * objects[i].randomScale;
+    let scale = scl * 11 * objects[i].randomScale;
 
     objects[i].w = objects[i].img.width / maxWH * scale;
     objects[i].h = objects[i].img.height / maxWH * scale;
