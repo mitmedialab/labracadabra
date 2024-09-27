@@ -336,14 +336,12 @@ function draw() {
 
   if (millis() - loadTime > 1000) {
     moveObjects();
-    if (!isMobile()) {
-      checkIntersections();
-  
-      if (keyIsDown(RIGHT_ARROW)) {
-        pyramidCenter += 1;
-      } else if (keyIsDown(LEFT_ARROW)) {
-        pyramidCenter -= 1;
-      }
+    checkIntersections();
+
+    if (keyIsDown(RIGHT_ARROW)) {
+      pyramidCenter += 1;
+    } else if (keyIsDown(LEFT_ARROW)) {
+      pyramidCenter -= 1;
     }
     
   
