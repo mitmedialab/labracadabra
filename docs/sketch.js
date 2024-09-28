@@ -68,13 +68,15 @@ function setup() {
   //   return;
   // }
   imageMode(CENTER);
-  canvas = createCanvas(windowWidth, windowHeight);
-  console.log("window: ", windowWidth, windowHeight);
-  console.log("wxh: ", width, height);
-  scl = min(width, height) / 100; // Adjust scale based on screen size
-  console.log("scale: ", scl);
+  
 
   if (windowWidth >= windowHeight) {
+    canvas = createCanvas(windowWidth, windowHeight);
+    console.log("window: ", windowWidth, windowHeight);
+    console.log("wxh: ", width, height);
+    scl = min(width, height) / 100; // Adjust scale based on screen size
+    console.log("scale: ", scl);
+
     actualWidth = width / 1.618;
     marginLeft = width - actualWidth;
     pyramidCenter = marginLeft + actualWidth / 2;
@@ -83,16 +85,19 @@ function setup() {
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
   } else {
-    actualWidth = width * 0.4;
+    canvas = createCanvas(400, windowHeight/2);
+    console.log("window: ", windowWidth, windowHeight);
+    console.log("wxh: ", width, height);
+    scl = min(width, height) / 100; // Adjust scale based on screen size
+    console.log("scale: ", scl);
+
+    actualWidth = width;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
     pyramidHeight = 240;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
-    pyramidCenter = fontSize * 16;
-    actualWidth = pyramidCenter * 2;
-    scl *= 0.666;
   }
   
   textFont(font);
@@ -113,9 +118,11 @@ function setup() {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  scl = min(width, height) / 100;
+  
   if (windowWidth >= windowHeight) {
+    resizeCanvas(windowWidth, windowHeight);
+    scl = min(width, height) / 100;
+
     actualWidth = width / 1.618;
     marginLeft = width - actualWidth;
     pyramidCenter = marginLeft + actualWidth / 2;
@@ -125,16 +132,16 @@ function windowResized() {
     pyramidTop = height - pyramidHeight + lineHeight / 2;
     resetLayout();  
   } else {
-    actualWidth = width * 0.4;
+    resizeCanvas(400, windowHeight);
+    scl = min(width, height) / 100;
+
+    actualWidth = width;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
     pyramidHeight = 240;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
-    pyramidCenter = fontSize * 16;
-    actualWidth = pyramidCenter * 2;
-    scl *= 0.666;
   }
 
   
