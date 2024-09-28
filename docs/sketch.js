@@ -85,7 +85,7 @@ function setup() {
     fontSize = lineHeight * 0.95;
     pyramidTop = height - pyramidHeight + lineHeight / 2;
   } else {
-    canvas = createCanvas(414, windowHeight);
+    canvas = createCanvas(400, windowHeight);
     console.log("window: ", windowWidth, windowHeight);
     console.log("wxh: ", width, height);
     scl = min(width, height) / 100; // Adjust scale based on screen size
@@ -132,7 +132,7 @@ function windowResized() {
     pyramidTop = height - pyramidHeight + lineHeight / 2;
     resetLayout();  
   } else {
-    resizeCanvas(414, windowHeight);
+    resizeCanvas(400, windowHeight);
     scl = min(width, height) / 100;
 
     actualWidth = width;
