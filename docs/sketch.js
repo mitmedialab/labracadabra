@@ -90,7 +90,7 @@ function setup() {
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
-    pyramidCenter = fontSize * 15;
+    pyramidCenter = fontSize * 16;
     actualWidth = pyramidCenter * 2;
     scl *= 0.666;
   }
@@ -132,7 +132,7 @@ function windowResized() {
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
-    pyramidCenter = fontSize * 15;
+    pyramidCenter = fontSize * 16;
     actualWidth = pyramidCenter * 2;
     scl *= 0.666;
   }

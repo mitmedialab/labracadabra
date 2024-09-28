@@ -45,6 +45,11 @@
         z-index: 20;
       }
 
+      a:visited {
+          color: blue;
+          text-decoration: underline;
+      } 
+
         .ie-button {
             position: relative;
             display: block;
@@ -85,7 +90,7 @@
         }
 
         .workshop_credits {
-          font-size: 12px;
+          font-size: 13px;
           font-style: italic;
         }
 
@@ -118,6 +123,113 @@
       .wide-video-container {
         display: none;
       }
+
+      #workshop_schedule {
+        margin-top: 6px;
+        display:none;
+      }
+
+      .win98popup {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Microsoft Sans Serif", sans-serif;
+        background: #c2c6ca;
+        font-size: 12px;
+        -webkit-font-smoothing: none;
+        width: 300px;
+        height: 160px;
+        z-index:999;
+        box-shadow: 0.5px 0.5px 0 0.5px black, inset 1px 1px #C2C6CA, inset -1px -1px #85898d, inset 2px 2px white;
+
+        button {
+          background: #c2c6ca;
+          border: none;
+          padding: 0;
+          border-radius: 0;
+          outline: none;
+        }
+
+        .shadow {
+          box-shadow: 0.5px 0.5px 0 0.5px black, inset 1px 1px white,
+            inset -1px -1px #85898d;
+        }
+
+          .bar {
+            display: flex;
+            flex-flow: row nowrap;
+            font-weight: bold;
+            justify-content: space-between;
+            width: calc(100% - 11px);
+            height: 13px;
+            color: white;
+            background: #00a;
+            padding: 2px 3px 3px;
+            margin: 3px 2px 1px 3px;
+            p {
+              margin: 0;
+            }
+            button {
+              width: 15px;
+              height: 13px;
+              &:active {
+                box-shadow: 0.5px 0.5px 0 0.5px white, inset 1px 1px black,
+                  inset -1px -1px #c2c6ca, inset 2px 2px #85898d;
+                svg {
+                  transform: translateX(1px) translateY(1px);
+                }
+              }
+              svg {
+                margin: 3px 3px 3px 4px;
+              }
+            }
+          }
+          .buttons {
+            display: flex;
+            flex-flow: row nowrap;
+            margin: 1px 15px 14px 14px;
+            button {
+              width: 74px;
+              height: 22px;
+              display: grid;
+              &:not(:last-child){
+                margin-right: 7px;
+              }
+              p {
+                font-size: 12px;
+                margin: auto;
+              }
+              img {
+                margin: 4px 3px 3px 4px;
+                display: none;
+              }
+              p, img {
+                grid-column: 1;
+                grid-row: 1;
+              }
+              &:focus {
+                outline: none;
+                box-shadow: 0.5px 0.5px 0 0.5px black, inset 1px 1px black,  inset -1px -1px black, inset 2px 2px white, inset -2px -2px #85898d;
+                img {
+                  display: block;
+                }
+              }
+              &:active {
+                box-shadow: 0.5px 0.5px 0 0.5px black, inset 1px 1px black,
+                  inset -1px -1px #85898d, inset 2px 2px #85898d;
+                outline: none;
+                p, img {
+                  transform: translateX(1px) translateY(1px);
+                }
+              }
+            }
+          }
+        }
+      
+
+
+      
 
       
 
@@ -176,6 +288,88 @@
           }
       }
     </style>
+    <script>
+      let popups = 0;
+
+      const hackathonDescription = `Are you coming to the Opening Ceremony?<br/><br/>Time: Tuesday 7pm, October 15.<br />Location: E14 6th floor (MPR)`;
+      const labaretDescription = `Are you coming to the Labaret?<br/><br/>Time: Friday 6pm, October 18.<br />Location: E14 3rd floor (atrium)`
+      const partyDescription = `Are you coming to 99FRIDAYS?<br/><br/>Time: Friday 9pm, October 18.<br />Location: E14 3rd floor (atrium)`
+      const exhibitDescription = `The exhibition will be on display throughout<br />the week in the Media Lab...`;
+      const workshopDescription1 = `Machine Cabaret<br />by Kelly Dobson and Sophia Brueckner<br /><br />Time: Wednesday 6pm, October 16.<br />Location: E14 6th floor`;
+      const workshopDescription2 = `Social Fabrics Re-imagined:<br />From Attention Economies to Intention Ecologies<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor`;
+      const workshopDescription3 = `The Cardboard Research Institute<br />by Che-Wei Wang and Jonathan Bobrow<br /><br />Time: Thursday 10am, October 17.<br />Location: E14 6th floor`;
+      const workshopDescription4 = `Media Lab Confessionals: Generative Critique<br />by Alexis Hope<br /><br />Time: Wednesday 10am, October 16.<br />Location: E14 6th floor`;
+
+
+
+
+      function createRetroPopup(title, description) {
+          let translateX = 10 * popups - 150;
+          let translateY = 10 * popups - 80;
+          popups += 1;
+
+          // Create the outer div for the popup
+          const popupDiv = document.createElement('div');
+          popupDiv.id = 'retroPopup';
+          popupDiv.classList.add('win98popup')
+          popupDiv.classList.add('shadow');
+          popupDiv.style.position = 'fixed';
+          popupDiv.style.top = '50%';
+          popupDiv.style.left = '50%';
+          popupDiv.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
+
+          const barDiv = document.createElement('div');
+          barDiv.classList.add('bar')
+
+          const pTitle = document.createElement('p');
+          pTitle.innerHTML = title;
+
+          const closeButton = document.createElement('button');
+          closeButton.classList.add('shadow')
+          closeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="8px" height="7px" viewBox="0 0 8 7" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M1 6V5h1V4h1V3h2v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1zm0-4V1H0V0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H2V2H1z"/></svg>`
+          closeButton.onclick = function() {
+              document.body.removeChild(popupDiv);
+          };
+
+          barDiv.appendChild(pTitle);
+          barDiv.appendChild(closeButton);
+
+          const section = document.createElement('section');
+          section.innerHTML = `<p>` + description + `</p>`;
+
+          const buttonsDiv = document.createElement('div');
+          buttonsDiv.classList.add('buttons');
+
+          for (let i = 0; i < 3; i++) {
+            const button1 = document.createElement('button');
+            button1.classList.add('shadow')
+            button1.innerHTML = `<img src="https://raw.githubusercontent.com/mbledkowski/win98popup/master/outline.svg" alt="" width="66.9" height="15"><p><u>Y</u>es</p>`;
+            button1.onclick = function() {
+                document.body.removeChild(popupDiv);
+            };
+            buttonsDiv.appendChild(button1);
+          }
+
+          popupDiv.appendChild(barDiv);
+          popupDiv.appendChild(section);
+          popupDiv.appendChild(buttonsDiv);
+
+          // Add the popup div to the body of the document
+          document.body.appendChild(popupDiv);
+      }
+
+      showWorkshopSchedule = false;
+      function hideShowWorkshopSchedule() {
+          let workshopSchedule = document.getElementById("workshop_schedule");
+          if (showWorkshopSchedule) {
+            workshopSchedule.style.display = "none";
+          } else {
+            workshopSchedule.style.display = "block";
+          }
+          showWorkshopSchedule = !showWorkshopSchedule;
+      }
+
+    </script>
   </head>
   <body>
     
@@ -192,46 +386,44 @@
 
     <div class="explanation-outer">
       <div class="explanation-inner">
-        <b>Step right up! Step right up!</b>
+        Step right up! Step right up!
   
         <p align="justify">In preparation for the upcoming <b>40th anniversary</b> of the MIT Media Lab (Oct 2025), prepare yourselves to be <i>dazzled</i> and <i>bewildered</i> by the most <i>spectacular</i> show this side of reality!</p>
-        <p>Welcome to...</p>
-        <h2 style="padding-left:20px;">LABRACADABRA</h2>
-        <h3 style="text-align:center">The Untold Histories of the Future</h3>
-        <h4 style="text-align:right; padding-right:20px;">15-18 Oct 2024</h4>
+
+        <h1 style="">LABRACADABRA</h1>
+        <i style="font-size:18px">The Untold Histories of the Future</i>
+        <h4 style="">October 15-18, 2024</h4>
   
         <p align="justify">We invite you to co-create in this week-long <i>future-history</i> festival where students, alumni, staff, and faculty will dive into four decades of impactful, playful, and quirky past to <b>re-imagine</b> our vision for the future.</p>
         
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfrimrYRo63dSFQALbGU1E_iABYiCjCM1PR3Z3k2DqfmO1Gmw/viewform?usp=sharing"  class="ie-button">SIGN UP TODAY!!</a>
+        <div  class="ie-button">SIGN UP TODAY!!</div>
         <br />
         <p>
         What is LABRACADABRA??!?<br />
         <ul>
-          <li>a <u>HACKATHON</u> where current students and lab friends hack together to <b>re-visit</b> past Media Lab projects using new technologies and fresh perspectives.
-          <li>hands-on <u>WORKSHOPS</u> (a.k.a <i>TIME CAPSULES</i>) by distinguished alumni from various eras:
-              <!-- <ul>
-                <li><b>The Machine Cabaret</b> <span class="workshop_credits">(by Kelly Dobson <i>MAS02'</i> & Sophia Brueckner <i>MAS14'</i>)</span></li>
-                <li><b>Social Fabrics Re-imagined</b>: From Attention Economies to Intention Ecologies <span class="workshop_credits">(by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, Rubez Chong <i>MAS20'</i>)</span></li>
-                <li><b>The Cardboard Research Institute</b> <span class="workshop_credits">(by Che-Wei Wang <i>MAS15'</i> & Jonathan Bobrow <i>MAS16'</i>)</span></li>
-                <li><b>Media Lab Confessionals</b>: Generative Critique <span class="workshop_credits">(by Alexis Hope <i>MAS21'</i> & ???)</span></li>
-              </ul> -->
+          <li>a <a href="#" onclick="createRetroPopup('HACKATHON', hackathonDescription)"><b>HACKATHON</b></a> where current students and lab friends hack together to re-visit past Media Lab projects using new technologies and fresh perspectives.
+          <li>hands-on <a href="#" onclick="hideShowWorkshopSchedule()"><b>WORKSHOPS</b></a> (a.k.a <i>TIME CAPSULES</i>) by distinguished alumni from various eras:
+              <ul id="workshop_schedule">
+                <li><a href="#" onclick="createRetroPopup('WORKSHOP', workshopDescription1)">The Machine Cabaret</a> <span class="workshop_credits">by Kelly Dobson <i>MAS02'</i> & Sophia Brueckner <i>MAS14'</i></span></li>
+                <li><a href="#" onclick="createRetroPopup('WORKSHOP', workshopDescription2)">Social Fabrics Re-imagined: From Attention Economies to Intention Ecologies</a> <span class="workshop_credits">by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, Rubez Chong <i>MAS20'</i></span></li>
+                <li><a href="#" onclick="createRetroPopup('WORKSHOP', workshopDescription3)">The Cardboard Research Institute</a> <span class="workshop_credits">by Che-Wei Wang <i>MAS15'</i> & Jonathan Bobrow <i>MAS16'</i></span></li>
+                <li><a href="#" onclick="createRetroPopup('WORKSHOP', workshopDescription4)">Media Lab Confessionals: Generative Critique</a> <span class="workshop_credits">by Alexis Hope <i>MAS21'</i> & ???</span></li>
+              </ul>
           
           </li>
   
-          <li>an <u>EXHIBITION</u> showcasing historic Media Lab pieces and <b>untold</b> stories that make up the lab. Do you have artefacts to contribute? <a href="mailto:vdanry@mit.edu">Email us!</a></li>
+          <li>an <a href="#" onclick="createRetroPopup('EXHIBITION', exhibitDescription)"><b>EXHIBITION</b> </a>showcasing historic Media Lab pieces and untold stories that make up the lab. Do you have artefacts to contribute? <a href="mailto:vdanry@mit.edu">Email us!</a></li>
   
-          <li>the first-of-its-kind <u>LABARET</u> (think Cabaret but it's the Media Lab... :) where the results of the hackathon and the workshops will be performed and live-demoed. Perform or perish!</b></li>
+          <li>the first-of-its-kind <a href="#" onclick="createRetroPopup('LABARET', labaretDescription)"><b>LABARET</b></a> (think Cabaret but it's the Media Lab... :) where the results of the hackathon and the workshops will be performed and live-demoed. Perform or perish!</b></li>
 
-          <li>the legendary <b>99Fridays</b> <u>PARTY</u> to cap off the week!</li>
+          <li>the legendary <i>99Fridays</i> <a href="#" onclick="createRetroPopup('99FRIDAYS', partyDescription)"><b>PARTY</b></a> to cap off the week!</li>
   
         </ul>
-        <br />
-
-        <a href=""  class="ie-button">THE AWESOME SCHEDULE</a>
 
       </div>
     </div>
-    <div class="overlay"></div>
+
+    
 
     <div class="sponsered_by">organized by Studcom<br/> supported by E14 Fund and MIT Media Lab</div>
   </body>
