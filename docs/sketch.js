@@ -94,7 +94,7 @@ function setup() {
     actualWidth = width;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
-    pyramidHeight = 240;
+    pyramidHeight = 250;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
@@ -138,7 +138,7 @@ function windowResized() {
     actualWidth = width;
     marginLeft = 0;
     pyramidCenter = actualWidth / 2;
-    pyramidHeight = 240;
+    pyramidHeight = 250;
     lineHeight = pyramidHeight / 19;
     fontSize = lineHeight;
     pyramidTop = lineHeight / 2;
