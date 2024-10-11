@@ -89,7 +89,7 @@
             margin: 0px auto;
             width: 40%;
             z-index: 10;
-            padding: 6px 12px;
+            padding: 10px 12px;
             background-color: #dcdcdc;  /* Light gray background */
             border: 2px solid #f0f0f0;  /* Light top and left borders */
             border-right-color: #808080; /* Darker right and bottom borders */
@@ -161,7 +161,7 @@
 
       #workshop_schedule {
         margin-top: 6px;
-        display:none;
+        /*display:none;*/
       }
 
       .win98popup {
@@ -173,8 +173,8 @@
         background: #c2c6ca;
         font-size: 12px;
         -webkit-font-smoothing: none;
-        width: 300px;
-        height: 160px;
+        width: 480px;
+        /*height: 360px;*/
         z-index:999;
         box-shadow: 0.5px 0.5px 0 0.5px black, inset 1px 1px #C2C6CA, inset -1px -1px #85898d, inset 2px 2px white;
 
@@ -331,17 +331,35 @@
       const labaretDescription = `Are you coming to the Labaret?<br/><br/>Time: Friday 6pm, October 18.<br />Location: E14 3rd floor (atrium)`
       const partyDescription = `Are you coming to 99FRIDAYS?<br/><br/>Time: Friday 9pm, October 18.<br />Location: E14 3rd floor (atrium)`
       const exhibitDescription = `The exhibition will be on display throughout<br />the week in the Media Lab...`;
-      const workshopDescription1 = `Machine Cabaret<br />by Kelly Dobson, Sophia Brueckner,<br/> and Rébecca Kleinberger<br /><br />Time: Wednesday 6pm, October 16.<br />Location: E14 6th floor`;
-      const workshopDescription2 = `Social Fabrics Re-imagined:<br />From Attention Economies to Intention Ecologies<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor`;
-      const workshopDescription3 = `The Cardboard Research Institute<br />by Che-Wei Wang, Jonathan Bobrow and Taylor Levy<br /><br />Time: Thursday 10am, October 17.<br />Location: E14 6th floor`;
-      const workshopDescription4 = `Media Lab Confessionals: Behind the Curtain<br />by Alexis Hope and Cassie Lee<br /><br />Time: Wednesday 10am, October 16.<br />Location: E14 6th floor`;
+
+
+      const workshopDescription1 = `Machine Cabaret<br />by Kelly Dobson, Sophia Brueckner,<br/> and Rébecca Kleinberger<br /><br />Time: Wednesday 6pm, October 16.<br />Location: E14 6th floor<br /><br />Learn from/take inspiration from interaction artists+alums to misuse machines to express and connect.`;
+      
+      const workshopDescription2 = `Social Fabrics Re-imagined:<br />From Attention Economies to Intention Ecologies<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor<br /><br />Human social networks have existed and thrived from millennia. How has the internet transformed these social fabrics? How will AI transform them in the future? In this workshop, we will use principles of intention, care and critical sketching to prototype new social fabrics.<br /><br /><center><img src="img/SoFab.png" width=300 /></center>`;
+      
+      const workshopDescription3 = `The Cardboard Research Institute<br />by Che-Wei Wang, Jonathan Bobrow and Taylor Levy<br /><br />Time: Thursday 10am, October 17.<br />Location: E14 6th floor<br /><br /><img src="img/cri.png" width=400 />`;
+      
+      const workshopDescription4 = `Media Lab Confessionals: Behind the Curtain<br />by Alexis Hope and Cassie Lee<br /><br />Time: Wednesday 10am, October 16.<br />Location: E14 6th floor<br /><br />At the Media Lab, our stated mission is to “invent the future.”<br/>
+
+But… do we even want to live in the future we're inventing?  <br />
+
+Bold proposals require a lot of risks — so how do we walk the line between playfulness and asking tough questions? <br />
+
+In this candid, students-only workshop, we’ll try out an experimental and fun technique to engage with critique alongside our hopes for the future.<br />
+ 
+Alexis Hope will share the story of the troublemaking 2014 + 2018 “Make the Breast Pump Not Suck” Hackathon to start, which used humor and play to tackle a topic that is commonplace, yet taboo.<br />
+
+We welcome any and all students who want to challenge narratives we at the Media Lab are responsible for perpetuating — but bravely see critique as food for discovery, not shame.<br />
+ 
+While our intention is to approach our work with a critical eye, we will use tools like roleplay, storytelling, and dramatization to inspire hope, and help us make a future that doesn’t suck. 
+`;
 
 
 
 
       function createRetroPopup(title, description) {
-          let translateX = 10 * popups - 150;
-          let translateY = 10 * popups - 80;
+          let translateX = 10 * popups - 240;
+          let translateY = 10 * popups + 100;
           popups += 1;
 
           // Create the outer div for the popup
@@ -371,7 +389,7 @@
           barDiv.appendChild(closeButton);
 
           const section = document.createElement('section');
-          section.innerHTML = `<p>` + description + `</p>`;
+          section.innerHTML = `<p style="padding:0px 15px">` + description + `</p>`;
 
           const buttonsDiv = document.createElement('div');
           buttonsDiv.classList.add('buttons');
@@ -382,7 +400,7 @@
             button1.innerHTML = `<img src="https://raw.githubusercontent.com/mbledkowski/win98popup/master/outline.svg" alt="" width="66.9" height="15"><p><u>Y</u>es</p>`;
             button1.onclick = function() {
                 document.body.removeChild(popupDiv);
-                window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab');
+                //window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab');
             };
             buttonsDiv.appendChild(button1);
           }
@@ -395,7 +413,7 @@
           document.body.appendChild(popupDiv);
       }
 
-      showWorkshopSchedule = false;
+      showWorkshopSchedule = true;
       function hideShowWorkshopSchedule() {
           let workshopSchedule = document.getElementById("workshop_schedule");
           if (showWorkshopSchedule) {
@@ -433,26 +451,35 @@
   
         <p align="justify" >We invite you to co-create in this week-long <i>future-history</i> festival where students, alumni, staff, and faculty will dive into four decades of impactful, playful, and quirky past to <b>re-imagine</b> our vision for the future.</p>
         <br />
-        <div onclick="window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab')" class="ie-button">SIGN UP TODAY!!</div>
+        <div onclick="window.open('https://docs.google.com/document/d/1hCaFA7TPN4RztuOejMFjEb23cdqbivFiYgvWEe4ZyZw/edit?usp=sharing','_newtab')" class="ie-button">FULL SCHEDULE INFORMATION</div>
         <br />
         <p>
         What is LABRACADABRA??!?<br />
         <ul>
-          <li>a <a id="link_hackathon" href="#"><b>HACKATHON</b></a> where current students and lab friends hack together to re-visit past Media Lab projects using new technologies and fresh perspectives.
-          <li>hands-on <a id="link_workshops" href="#" onclick="hideShowWorkshopSchedule()"><b>WORKSHOPS</b></a> (a.k.a <i>TIME CAPSULES</i>) by distinguished alumni from various eras. Check out the <a id="schedule_link" href="#" onclick="hideShowWorkshopSchedule()">awesome schedule</a> <a class="expand" onclick="hideShowWorkshopSchedule()">↓↓↓</a>
+          <li>a <b>HACKATHON</b> where current students and lab friends hack together to re-visit past Media Lab projects using new technologies and fresh perspectives.
+            <ul id="workshop_schedule">
+              <li><b>Tue 5:30 pm</b> : <u>Opening Ceremony / Hackathon Kickoff</u></li>
+              <li><b>Wed 7:30 pm</b> : <u>Hack Night #2</u></li>
+              <li><b>Thu 7:30 pm</b> : <u>Hack Night #3</u></li>
+            </ul>
+          <li>hands-on <b>WORKSHOPS</b> (a.k.a <i>TIME CAPSULES</i>) by distinguished alumni from various eras. 
               <ul id="workshop_schedule">
-                <li><a id="link_workshop1" href="#">The Machine Cabaret</a> <span class="workshop_credits">by Kelly Dobson <i>MAS02'</i>, Sophia Brueckner <i>MAS14'</i>, and Rébecca Kleinberger <i>MAS20'</i></span></li>
-                <li><a id="link_workshop2" href="#">Social Fabrics Re-imagined: From Attention Economies to Intention Ecologies</a> <span class="workshop_credits">by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, Rubez Chong <i>MAS20'</i></span></li>
-                <li><a id="link_workshop3" href="#">The Cardboard Research Institute</a> <span class="workshop_credits">by Che-Wei Wang <i>MAS15'</i>, Jonathan Bobrow <i>MAS16'</i>, and Taylor Levy <i>MAS15'</i></span></li>
-                <li><a id="link_workshop4" href="#">Media Lab Confessionals: Behind the Curtain</a> <span class="workshop_credits">by Alexis Hope <i>MAS21'</i> & Cassie Lee <i>MAS24'</i></span></li>
+                <li><b>Wed 10:00 am : <a id="link_workshop4" href="#">Media Lab Confessionals: Behind the Curtain</a> </b><br /><span class="workshop_credits">by Alexis Hope <i>MAS21'</i> & Cassie Lee <i>MAS24'</i></span></li>
+                <li><b>Wed 5:30 pm : <a id="link_workshop1" href="#">The Machine Cabaret</a></b><br /> <span class="workshop_credits">by Kelly Dobson <i>MAS02'</i>, Sophia Brueckner <i>MAS14'</i>, and Rébecca Kleinberger <i>MAS20'</i></span></li>
+                <li><b>Thu 10 am : <a id="link_workshop3" href="#">The Cardboard Research Institute</a></b><br /> <span class="workshop_credits">by Che-Wei Wang <i>MAS15'</i>, Jonathan Bobrow <i>MAS16'</i>, and Taylor Levy <i>MAS15'</i></span></li>
+                <li><b>Thu 6 pm : <a id="link_workshop2" href="#">Social Fabrics Re-imagined: From Attention Economies to Intention Ecologies</a></b><br /> <span class="workshop_credits">by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, and Rubez Chong <i>MAS20'</i></span></li>
               </ul>
           </li>
   
-          <li>an <a  id="link_exhibition" href="#"><b>EXHIBITION</b> </a>showcasing historic Media Lab projects and untold stories that make up the lab. Got an old gizmo or a curious contraption to contribute? <a href="mailto:vdanry@mit.edu">Email us!</a></li>
+          <li>an <b>EXHIBITION</b> showcasing historic Media Lab projects and untold stories that make up the lab. Got an old gizmo or a curious contraption to contribute? <a href="mailto:vdanry@mit.edu">Email us!</a></li>
   
-          <li>the first-of-its-kind <a id="link_labaret" href="#"><b>LABARET</b></a> (think Cabaret but it's the Media Lab... :) where the magical fruits of the hackathon and workshops will be demo-ed live on stage. Perform or perish!</b></li>
+          <li>the first-of-its-kind <b>LABARET</b> (think Cabaret but it's the Media Lab... :) where the magical fruits of the hackathon and workshops will be demo-ed live on stage. Perform or perish!</b></li>
 
-          <li>the legendary <i>99Fridays</i> <a id="link_party" href="#"><b>PARTY</b></a> to cap off the week!</li>
+          <li>the legendary <i>99Fridays</i> <b>PARTY</b> to cap off the week!</li>
+          <ul id="workshop_schedule">
+            <li><b>Fri 6 pm</b> : <u>LABARET</u><br /></li>
+            <li><b>Fri 9 pm</b> : <u>99Fridays</u><br /></li>
+          </ul>
   
         </ul>
 
@@ -462,6 +489,9 @@
         </p>
         <br />
 
+        <div onclick="window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab')" class="ie-button">SIGN UP TODAY!!</div>
+
+        <br />
         <p>
           Labracadabra is conceptualized and organized by ML students with hope to bring the ML alumni community closer together, backed by the support and insights from the <a href="https://www.e14.vc/">E14 Fund</a>.
         </p>
@@ -470,20 +500,20 @@
     </div>
 
     <script>
-      document.getElementById('link_hackathon').addEventListener('click', function(event) {
-            // Prevent default action of the anchor link
-            event.preventDefault();
-            createRetroPopup('HACKATHON', hackathonDescription);
-      });
+      // document.getElementById('link_hackathon').addEventListener('click', function(event) {
+      //       // Prevent default action of the anchor link
+      //       event.preventDefault();
+      //       createRetroPopup('HACKATHON', hackathonDescription);
+      // });
 
-      document.getElementById('link_workshops').addEventListener('click', function(event) {
-            // Prevent default action of the anchor link
-            event.preventDefault();
-      });
-      document.getElementById('schedule_link').addEventListener('click', function(event) {
-            // Prevent default action of the anchor link
-            event.preventDefault();
-      });
+      // document.getElementById('link_workshops').addEventListener('click', function(event) {
+      //       // Prevent default action of the anchor link
+      //       event.preventDefault();
+      // });
+      // document.getElementById('schedule_link').addEventListener('click', function(event) {
+      //       // Prevent default action of the anchor link
+      //       event.preventDefault();
+      // });
 
       document.getElementById('link_workshop1').addEventListener('click', function(event) {
             // Prevent default action of the anchor link
@@ -509,23 +539,23 @@
             createRetroPopup('WORKSHOP', workshopDescription4);
       });
 
-      document.getElementById('link_exhibition').addEventListener('click', function(event) {
-            // Prevent default action of the anchor link
-            event.preventDefault();
-            createRetroPopup('EXHIBITION', exhibitDescription)
-      });
+      // document.getElementById('link_exhibition').addEventListener('click', function(event) {
+      //       // Prevent default action of the anchor link
+      //       event.preventDefault();
+      //       createRetroPopup('EXHIBITION', exhibitDescription)
+      // });
 
-      document.getElementById('link_labaret').addEventListener('click', function(event) {
-            // Prevent default action of the anchor link
-            event.preventDefault();
-            createRetroPopup('LABARET', labaretDescription)
-      });
+      // document.getElementById('link_labaret').addEventListener('click', function(event) {
+      //       // Prevent default action of the anchor link
+      //       event.preventDefault();
+      //       createRetroPopup('LABARET', labaretDescription)
+      // });
 
-      document.getElementById('link_party').addEventListener('click', function(event) {
-            // Prevent default action of the anchor link
-            event.preventDefault();
-            createRetroPopup('99FRIDAYS', partyDescription)
-      });
+      // document.getElementById('link_party').addEventListener('click', function(event) {
+      //       // Prevent default action of the anchor link
+      //       event.preventDefault();
+      //       createRetroPopup('99FRIDAYS', partyDescription)
+      // });
     </script>
 
     
