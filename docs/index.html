@@ -334,10 +334,14 @@
 
 
       const workshopDescription1 = `Machine Cabaret<br />by Kelly Dobson, Sophia Brueckner,<br/> and Rébecca Kleinberger<br /><br />Time: Wednesday 6pm, October 16.<br />Location: E14 6th floor<br /><br />Learn from/take inspiration from interaction artists+alums to misuse machines to express and connect.`;
-      
-      const workshopDescription2 = `Social Fabrics Re-imagined:<br />From Attention Economies to Intention Ecologies<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor<br /><br />Human social networks have existed and thrived from millennia. How has the internet transformed these social fabrics? How will AI transform them in the future? In this workshop, we will use principles of intention, care and critical sketching to prototype new social fabrics.<br /><br /><center><img src="img/SoFab.png" width=300 /></center>`;
-      
+      const workshopLink1 = 'https://forms.gle/S9Mo64YjDK7tJW739';
+
+
+      const workshopDescription2 = `Social Fabrication:<br /> Sketching, designing and crafting alternative futures of social networks<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor<br /><br />Human social networks have long existed before social media giants entered the scene. How has the internet transformed these social fabrics? How will AI transform them in the future? In this workshop,we will examine how we interact online and offline to question what it means to create authentic social networks. Bonus: we will also review past Media Lab projects and how the questions they explored continue to shape our present and future.<br /><br /><center><img src="img/SoFab.png" width=300 /></center>`;
+      const workshopLink2 = 'https://forms.gle/cuMbzHQSTuRUHTUF8';
+
       const workshopDescription3 = `The Cardboard Research Institute<br />by Che-Wei Wang, Jonathan Bobrow and Taylor Levy<br /><br />Time: Thursday 10am, October 17.<br />Location: E14 6th floor<br /><br /><img src="img/cri.png" width=400 />`;
+      const workshopLink3 = 'https://forms.gle/PFDKzqc9Fw7Sg9iA6';
       
       const workshopDescription4 = `Media Lab Confessionals: Behind the Curtain<br />by Alexis Hope and Cassie Lee<br /><br />Time: Wednesday 10am, October 16.<br />Location: E14 6th floor<br /><br />At the Media Lab, our stated mission is to “invent the future.”<br/>
 
@@ -354,10 +358,14 @@ We welcome any and all students who want to challenge narratives we at the Media
 While our intention is to approach our work with a critical eye, we will use tools like roleplay, storytelling, and dramatization to inspire hope, and help us make a future that doesn’t suck. 
 `;
 
+    const workshopLink4 = 'https://forms.gle/w3gY8Rn32CuzMw9e9';
+
+      
 
 
 
-      function createRetroPopup(title, description) {
+
+      function createRetroPopup(title, description, buttonLink) {
           let translateX = 10 * popups - 240;
           let translateY = 10 * popups + 100;
           popups += 1;
@@ -394,16 +402,33 @@ While our intention is to approach our work with a critical eye, we will use too
           const buttonsDiv = document.createElement('div');
           buttonsDiv.classList.add('buttons');
 
-          for (let i = 0; i < 3; i++) {
-            const button1 = document.createElement('button');
-            button1.classList.add('shadow')
-            button1.innerHTML = `<img src="https://raw.githubusercontent.com/mbledkowski/win98popup/master/outline.svg" alt="" width="66.9" height="15"><p><u>Y</u>es</p>`;
-            button1.onclick = function() {
-                document.body.removeChild(popupDiv);
-                //window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab');
-            };
-            buttonsDiv.appendChild(button1);
-          }
+          const buttonRSVP = document.createElement('button');
+          buttonRSVP.classList.add('shadow')
+          buttonRSVP.innerHTML = `<img src="https://raw.githubusercontent.com/mbledkowski/win98popup/master/outline.svg" alt="" width="66.9" height="15"><p><u>R</u>SVP</p>`;
+          buttonRSVP.onclick = function() {
+              document.body.removeChild(popupDiv);
+              window.open(buttonLink,'_newtab');
+          };
+          buttonsDiv.appendChild(buttonRSVP);
+
+          const buttonClose = document.createElement('button');
+          buttonClose.classList.add('shadow')
+          buttonClose.innerHTML = `<img src="https://raw.githubusercontent.com/mbledkowski/win98popup/master/outline.svg" alt="" width="66.9" height="15"><p><u>C</u>lose</p>`;
+          buttonClose.onclick = function() {
+              document.body.removeChild(popupDiv);
+          };
+          buttonsDiv.appendChild(buttonClose);
+
+          // for (let i = 0; i < 3; i++) {
+          //   const button1 = document.createElement('button');
+          //   button1.classList.add('shadow')
+          //   button1.innerHTML = `<img src="https://raw.githubusercontent.com/mbledkowski/win98popup/master/outline.svg" alt="" width="66.9" height="15"><p><u>Y</u>es</p>`;
+          //   button1.onclick = function() {
+          //       document.body.removeChild(popupDiv);
+          //       //window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab');
+          //   };
+          //   buttonsDiv.appendChild(button1);
+          // }
 
           popupDiv.appendChild(barDiv);
           popupDiv.appendChild(section);
@@ -467,7 +492,7 @@ While our intention is to approach our work with a critical eye, we will use too
                 <li><b>Wed 10:00 am : <a id="link_workshop4" href="#">Media Lab Confessionals: Behind the Curtain</a> </b><br /><span class="workshop_credits">by Alexis Hope <i>MAS21'</i> & Cassie Lee <i>MAS24'</i></span></li>
                 <li><b>Wed 5:30 pm : <a id="link_workshop1" href="#">The Machine Cabaret</a></b><br /> <span class="workshop_credits">by Kelly Dobson <i>MAS02'</i>, Sophia Brueckner <i>MAS14'</i>, and Rébecca Kleinberger <i>MAS20'</i></span></li>
                 <li><b>Thu 10 am : <a id="link_workshop3" href="#">The Cardboard Research Institute</a></b><br /> <span class="workshop_credits">by Che-Wei Wang <i>MAS15'</i>, Jonathan Bobrow <i>MAS16'</i>, and Taylor Levy <i>MAS15'</i></span></li>
-                <li><b>Thu 6 pm : <a id="link_workshop2" href="#">Social Fabrics Re-imagined: From Attention Economies to Intention Ecologies</a></b><br /> <span class="workshop_credits">by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, and Rubez Chong <i>MAS20'</i></span></li>
+                <li><b>Thu 6 pm : <a id="link_workshop2" href="#">SoFab - Social Fabrication</a></b><br /> <span class="workshop_credits">by Ziv Epstein <i>MAS23'</i>, Judith Donath <i>MAS96'</i>, and Rubez Chong <i>MAS20'</i></span></li>
               </ul>
           </li>
   
@@ -518,25 +543,25 @@ While our intention is to approach our work with a critical eye, we will use too
       document.getElementById('link_workshop1').addEventListener('click', function(event) {
             // Prevent default action of the anchor link
             event.preventDefault();
-            createRetroPopup('WORKSHOP', workshopDescription1);
+            createRetroPopup('WORKSHOP', workshopDescription1, workshopLink1);
       });
 
       document.getElementById('link_workshop2').addEventListener('click', function(event) {
             // Prevent default action of the anchor link
             event.preventDefault();
-            createRetroPopup('WORKSHOP', workshopDescription2);
+            createRetroPopup('WORKSHOP', workshopDescription2, workshopLink2);
       });
 
       document.getElementById('link_workshop3').addEventListener('click', function(event) {
             // Prevent default action of the anchor link
             event.preventDefault();
-            createRetroPopup('WORKSHOP', workshopDescription3);
+            createRetroPopup('WORKSHOP', workshopDescription3, workshopLink3);
       });
 
       document.getElementById('link_workshop4').addEventListener('click', function(event) {
             // Prevent default action of the anchor link
             event.preventDefault();
-            createRetroPopup('WORKSHOP', workshopDescription4);
+            createRetroPopup('WORKSHOP', workshopDescription4, workshopLink4);
       });
 
       // document.getElementById('link_exhibition').addEventListener('click', function(event) {
