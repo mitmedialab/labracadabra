@@ -337,7 +337,7 @@
       const workshopLink1 = 'https://forms.gle/S9Mo64YjDK7tJW739';
 
 
-      const workshopDescription2 = `Social Fabrication:<br /> Sketching, designing and crafting alternative futures of social networks<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor<br /><br />Human social networks have long existed before social media giants entered the scene. How has the internet transformed these social fabrics? How will AI transform them in the future? In this workshop,we will examine how we interact online and offline to question what it means to create authentic social networks. Bonus: we will also review past Media Lab projects and how the questions they explored continue to shape our present and future.<br /><br /><center><img src="img/SoFab.png" width=300 /></center>`;
+      const workshopDescription2 = `Social Fabrication:<br /> Sketching, designing and crafting alternative futures of social networks<br />by Ziv Epstein, Judith Donath, and Rubez Chong<br /><br />Time: Thursday 6pm, October 17.<br />Location: E14 6th floor<br /><br />Human social networks have long existed before social media giants entered the scene. How has the internet transformed these social fabrics? How will AI transform them in the future? In this workshop,we will examine how we interact online and offline to question what it means to create authentic social networks. Bonus: we will also review past Media Lab projects and how the questions they explored continue to shape our present and future.<br /><br /><center><img src="img/so-fab-medium.png" width=400 /></center>`;
       const workshopLink2 = 'https://forms.gle/cuMbzHQSTuRUHTUF8';
 
       const workshopDescription3 = `The Cardboard Research Institute<br />by Che-Wei Wang, Jonathan Bobrow and Taylor Levy<br /><br />Time: Thursday 10am, October 17.<br />Location: E14 6th floor<br /><br /><img src="img/cri.png" width=400 />`;
@@ -367,7 +367,7 @@ While our intention is to approach our work with a critical eye, we will use too
 
       function createRetroPopup(title, description, buttonLink) {
           let translateX = 10 * popups - 240;
-          let translateY = 10 * popups + 100;
+          let translateY = 10 * popups - 300;
           popups += 1;
 
           // Create the outer div for the popup
@@ -376,7 +376,7 @@ While our intention is to approach our work with a critical eye, we will use too
           popupDiv.classList.add('win98popup')
           popupDiv.classList.add('shadow');
           popupDiv.style.position = 'fixed';
-          popupDiv.style.bottom = '50%';
+          popupDiv.style.top = '50%';
           popupDiv.style.left = '50%';
           popupDiv.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
 
