@@ -504,6 +504,7 @@ While our intention is to approach our work with a critical eye, we will use too
           <ul id="workshop_schedule">
             <li><b>Fri 6 pm</b> : <u>LABARET</u><br /></li>
             <li><b>Fri 9 pm</b> : <u>99Fridays</u><br /></li>
+            <li><b><a id="link_rsvp" href="#">RSVP NOW!!</a></b></li>
           </ul>
   
         </ul>
@@ -514,7 +515,7 @@ While our intention is to approach our work with a critical eye, we will use too
         </p>
         <br />
 
-        <div onclick="window.open('https://www.eventbrite.com/e/mit-media-lab-presents-labracadabra-untold-histories-festival-tickets-1025137683407','_newtab')" class="ie-button">SIGN UP TODAY!!</div>
+        <div onclick="window.open('https://forms.gle/f5gPhiGLoD1cZ139A','_newtab')" class="ie-button">RSVP to 99FRIDAYS!!</div>
 
         <br />
         <p>
@@ -562,6 +563,12 @@ While our intention is to approach our work with a critical eye, we will use too
             // Prevent default action of the anchor link
             event.preventDefault();
             createRetroPopup('WORKSHOP', workshopDescription4, workshopLink4);
+      });
+
+      document.getElementById('link_rsvp').addEventListener('click', function(event) {
+            // Prevent default action of the anchor link
+            event.preventDefault();
+            window.open('https://forms.gle/f5gPhiGLoD1cZ139A','_newtab');
       });
 
       // document.getElementById('link_exhibition').addEventListener('click', function(event) {
